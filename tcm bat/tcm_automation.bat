@@ -1,5 +1,5 @@
 @echo off
-set projectLocation=C:\Users\Beverly\.jenkins\jobs\automation\workspace\
+set projectLocation=C:\Users\Beverly\.jenkins\jobs\automation\workspace\tcm bat
 cd %projectLocation%
 
 ::npm install node-get-time --save   
