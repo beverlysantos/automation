@@ -180,4 +180,4 @@ beforeEach(async () =>
 		}	
 	});
 	afterEach(async () => page.quit());	
-});
+}); 
