@@ -1,5 +1,5 @@
 
-set projectLocation=C:\Users\Beverly\.jenkins\jobs\automation\workspace
+set projectLocation=C:\Jenkins\jobs\automation\workspace\
 cd %projectLocation%
 
 

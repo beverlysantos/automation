@@ -1,5 +1,5 @@
 @echo off
-set projectLocation=C:\Users\Beverly\.jenkins\jobs\automation\workspace\tcm bat
+set projectLocation=C:\Jenkins\jobs\automation\workspace\tcm bat
 cd %projectLocation%
 
 ::npm install node-get-time --save   
@@ -39,17 +39,17 @@ if %mo%==01 (
 	set month=December
 )
 
-if not exist "C:\Users\Beverly\.jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\Log" mkdir C:\Users\Beverly\.jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\Log;
-if not exist "C:\Users\Beverly\.jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\Excel" mkdir C:\Users\Beverly\.jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\Excel;
+if not exist "C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\Log" mkdir C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\Log;
+if not exist "C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\Excel" mkdir C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\Excel;
 
 
 
-::echo. >> C:\Users\Beverly\.jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
+::echo. >> C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
 
-echo     		Test Summary as of %date:~-10,2%/%date:~-7,2%/%date:~-4,4% %time:~0,2%:%time:~3,2%:%time:~6,2%>> C:\Users\Beverly\.jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
+echo     		Test Summary as of %date:~-10,2%/%date:~-7,2%/%date:~-4,4% %time:~0,2%:%time:~3,2%:%time:~6,2%>> C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
 
-echo. >> C:\Users\Beverly\.jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
-echo     ADMIN SETTINGS >> C:\Users\Beverly\.jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
+echo. >> C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
+echo     ADMIN SETTINGS >> C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
 start /wait as_brf 
 start /wait as_brf_date 
 start /wait as_cur 
@@ -71,22 +71,22 @@ start /wait as_states
 start /wait as_task 
 start /wait as_use 
 
-echo. >> C:\Users\Beverly\.jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
-echo     CRM MODULE >> C:\Users\Beverly\.jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
+echo. >> C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
+echo     CRM MODULE >> C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
 start /wait crm_ful 
 start /wait crm_notes 
 start /wait crm_feed 
 
-echo. >> C:\Users\Beverly\.jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
-echo     BIM MODULE >> C:\Users\Beverly\.jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
+echo. >> C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
+echo     BIM MODULE >> C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
 start /wait bim_if 
 start /wait bim_is 
 start /wait bim_lr 
 start /wait bim_ti 
 start /wait bim_pr 
 
-echo. >> C:\Users\Beverly\.jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
-echo     REPORTS MODULE >> C:\Users\Beverly\.jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
+echo. >> C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
+echo     REPORTS MODULE >> C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
 start /wait rep_br 
 start /wait rep_ir 
 start /wait rep_sm 
@@ -105,8 +105,8 @@ start /wait rep_psku
 start /wait rep_fba 
 start /wait rep_nsr 
 
-echo. >> C:\Users\Beverly\.jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
-echo     SETTINGS MODULE >> C:\Users\Beverly\.jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
+echo. >> C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
+echo     SETTINGS MODULE >> C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
 start /wait set_asin 
 start /wait set_fbt 
 start /wait set_prodkey 
@@ -121,9 +121,9 @@ start /wait set_upi
 
 
 
-echo 	Test Automation ends at %time:~0,2%:%time:~3,2%:%time:~6,2%>>C:\Users\Beverly\.jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
-echo. >> C:\Users\Beverly\.jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
-echo. >> C:\Users\Beverly\.jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
+echo 	Test Automation ends at %time:~0,2%:%time:~3,2%:%time:~6,2%>>C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
+echo. >> C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
+echo. >> C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
 
 echo.
 echo  test done...
