@@ -1,18 +1,18 @@
 const Page = require('../lib/webdrivers'),
-      Expect = require('../lib/chai-expect'),
-      fs  = require("fs"),
-      time = require('node-get-time');
-      mkdirp = require('mkdirp');
+Expect = require('../lib/chai-expect'),
+fs  = require("fs"),
+time = require('node-get-time');
+mkdirp = require('mkdirp');
 var ks = require('node-key-sender');
+	  
+var td = '/TC_Sales Channel.csv';
+var ts = '/TS_Sales_Channel.txt';
 
-var td = '/Sales Channel.csv';
-var ts = '/Sales Channel.txt';
-
-describe('Amzentrix tests for Admin Settings - Sales Channel', async function () {
-	beforeEach(async () => 
-	{                                                         // mgrurun kada foreachs
-		page = new Page();
-        expect = new Expect();
+describe('Amzentrix tests for Admin Settings > Sales Channel', async function () {
+beforeEach(async () => 
+{
+	page = new Page();
+	expect = new Expect();
 
 		await page.CreateLog(ts,'Sales Channel \n');
 		await page.Log(ts,' Navigate to http://www.amzentrix.uat40/login \n');
@@ -22,7 +22,7 @@ describe('Amzentrix tests for Admin Settings - Sales Channel', async function ()
 		await page.writeByName("email", "jbeverly_qa@amzentrix.com");
 		
 		await page.Log(ts,' Input Password: ***** \n');
-        await page.writeByName("password", "password");
+        	await page.writeByName("password", "password");
 		
 		await page.Log(ts,' Click Submit button \n');
 		await page.Login_Submit_Click();		
@@ -32,19 +32,15 @@ describe('Amzentrix tests for Admin Settings - Sales Channel', async function ()
 		});
 		await page.Log(ts,' [Successful] Validation in Header title  \n');	
 		
-		await page.Log(ts,' Click Navigation dropdown \n');
-		await page.clickId("navbarTopDropdownMenuItems");
+		await page.Log(ts,' Select Settings in dropdown menu \n');
+		await page.Home_DropdownMenu('Settings');
 		
-		await page.Log(ts,' Select Settings \n');
-		await page.clickXpath("//*[@id='navbarTogglerDemo03']//a[5]");
-		
-		await page.clickId("fvpp-close");
-		
-		await page.Log(ts,' Scroll down to Sales Channel  \n');	
-		await ks.sendKeys(['down','down','down','down','down','down','down','down']);
+		await page.getClassText("page-header").then(function(text)   {
+            return expect.toHaveString(text, "SETTINGS");
+        });
 		
 		await page.Log(ts,' Click View icon in Sales Channel \n');	
-		await page.clickId("sales-channels");
+		await page.AdminSettings("Sales Channels");
 	});		
 	it('Should perform Add, Edit and Delete', async () =>
 	{
@@ -56,20 +52,21 @@ describe('Amzentrix tests for Admin Settings - Sales Channel', async function ()
 		    		return expect.toHaveString(text, "SALES CHANNELS");
 				});;	
     			await page.Log(ts,' [SUCCESSFUL] Validation for Page Header \n');
-
 				passed_p(3,td);
-			} catch (error) {
-				console.log(error);
+			} 
+			catch(error)
+			{
+				console.log('\t   ' + error );
 				failed_p(3,td);
-			}
+			}	
 			// ADD -------------------------------------------------------------------
 			try
 			{
 				await page.Log(ts,' Click Add button \n');			
 				await page.Addbtn_Click();
 				
-				await page.Log(ts," Input 'test9' in Name field \n");
-				await page.writeById("name", "test9");
+				await page.Log(ts," Input 'test29' in Name field \n");
+				await page.writeById("name", "test29");
 				
 				await page.Log(ts,' Click Country dropdown \n');	
 				await page.clickId("country_id");
@@ -84,18 +81,19 @@ describe('Amzentrix tests for Admin Settings - Sales Channel', async function ()
 				await page.clickClassName("btn btn-info addbtn");
 
 				await page.Log(ts,' Click OK \n');		
-				await ks.sendKey("enter");
+				await ks.sendKey("enter");				
 				
-				await ks.sendKeys(['down','down','down','down','down','down','down','down','down','down','down','down']);
-				
-				await page.Log(ts," [Add Successful] data found in row 16 \n");	
+				await page.Log(ts," [Add Successful] \n");
+				await page.validateRow(ts, '#main-content tbody tr td:nth-child(2)','test29');
 				await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)").then(function(text)
 				{
-					return expect.toHaveString(text,"test9")
+					return expect.toHaveString(text,"test29")
 				});	
 				passed_p(2,td);
-			} catch (error) {
-				console.log(error);
+			} 
+			catch(error)
+			{
+				console.log('\t   ' + error );
 				failed_p(2,td);
 			}
 			
@@ -108,8 +106,8 @@ describe('Amzentrix tests for Admin Settings - Sales Channel', async function ()
 				await page.Log(ts,' Clear Name field \n');
 				await page.clearId("name");
 				
-				await page.Log(ts," Input 'test10' in Name field \n");
-				await page.writeById("name", "test10");
+				await page.Log(ts," Input 'test30' in Name field \n");
+				await page.writeById("name", "test30");
 				
 				await page.Log(ts,' Click Country dropdown \n');	
 				await page.clickId("country_id");
@@ -129,15 +127,16 @@ describe('Amzentrix tests for Admin Settings - Sales Channel', async function ()
 				await page.Log(ts,' Click OK \n');
 				await ks.sendKey("enter");
 				
-				await ks.sendKeys(['down','down','down','down','down','down','down','down','down','down','down','down']);
-				
-				await page.Log(ts, " [Edit Successful] data found in row 16 \n");	
+				await page.Log(ts," [Edit Successful] \n");
+				await page.validateRow(ts, '#main-content tbody tr td:nth-child(2)','test30');	
 				await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)").then(function(text){
-					return expect.toHaveString(text,"test10")
+					return expect.toHaveString(text,"test30")
 				});
 				passed_p(1,td);
-			} catch (error) {
-				console.log(error);
+			} 
+			catch(error)
+			{
+				console.log('\t   ' + error );
 				failed_p(1,td);
 			}
 			// --------------------------------------------------------------------------
@@ -145,9 +144,10 @@ describe('Amzentrix tests for Admin Settings - Sales Channel', async function ()
 			// Delete -------------------------------------------------------------------
 			try
 			{ 
-				await page.Log(ts, " [For Deletion] data found in row 16 \n");	
+				await page.Log(ts," [For Deletion] \n");
+				await page.validateRow(ts, '#main-content tbody tr td:nth-child(2)','test30');	
 				await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)").then(function(text){
-					return expect.toHaveString(text,"test10")
+					return expect.toHaveString(text,"test30")
 				});
 				
 				await page.Log(ts,' Click Delete icon \n');
@@ -160,18 +160,21 @@ describe('Amzentrix tests for Admin Settings - Sales Channel', async function ()
 				await ks.sendKey("enter");
 				
 				await page.Log(ts, " [Delete Successful] \n");
+				await page.validateDeletedRow(ts, '#main-content tbody tr td:nth-child(2)','test30');
 				passed_p(0,td);
-			} catch (error) {
-				console.log(error);
+			} 
+			catch(error)
+			{
+				console.log('\t   ' + error );
 				failed_p(0,td);
 			}
 			// --------------------------------------------------------------------------
 
-			await fs.appendFile(page.path , ' Admin Settings - Sales Channel SUCCESSFUL \n', function(err) {}) 			
+			await fs.appendFile( page.path, ' Admin Settings Sales Channel - Add, Edit and Delete SUCCESSFUL \n', function(err) {}) 			
 		}
 		catch(error)
 		{
-			await fs.appendFile(page.path , ' Admin Settings - Sales Channel FAILED \n', function(err) {
+			await fs.appendFile( page.path, ' Admin Settings Sales Channel - Add, Edit and Delete FAILED \n', function(err) {
                 console.log('\t   ' + error );
             })  
 		}	
