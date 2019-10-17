@@ -1,16 +1,16 @@
 const Page = require('../lib/webdrivers'),
-      Expect = require('../lib/chai-expect'),
-      fs  = require("fs"),
+	  Expect = require('../lib/chai-expect'),
+	  fs  = require("fs"),
       time = require('node-get-time');
       mkdirp = require('mkdirp');
-var ks = require('node-key-sender');
-
-var td = '/Task Statuses.csv';
-var ts = '/Task Statuses.txt';
+	  var ks = require('node-key-sender');
+	  
+var td = '/TC_Task Statuses.csv';
+var ts = '/TS_Task_Statuses.txt';
 
 describe('Amzentrix tests for Admin Settings > Task Statuses', async function () {
 	beforeEach(async () => 
-	{                                                         // mgrurun kada foreachs
+	{
 		page = new Page();
         expect = new Expect();
 
@@ -33,19 +33,15 @@ describe('Amzentrix tests for Admin Settings > Task Statuses', async function ()
 		});		
 		await page.Log(ts,' [Successful] Validation in Header title  \n');	
 		
-		await page.Log(ts,' Click Navigation dropdown \n');	
-		await page.clickId("navbarTopDropdownMenuItems");
+		await page.Log(ts,' Select Settings in dropdown menu \n');
+		await page.Home_DropdownMenu('Settings');
 		
-		await page.Log(ts,' Select Settings \n');	
-		await page.clickXpath("//*[@id='navbarTogglerDemo03']//a[5]");
-		
-		await page.clickId("fvpp-close");
-		
-		await page.Log(ts,' Scroll down to Task Statuses \n');	
-		await ks.sendKeys(['down','down','down','down','down','down','down','down','down','down','down','down','down']);
+		await page.getClassText("page-header").then(function(text)   {
+            return expect.toHaveString(text, "SETTINGS");
+        });
 		
 		await page.Log(ts,' Click View icon in Task Statuses \n');	
-		await page.clickId("task-statuses");
+		await page.AdminSettings("Task Statuses");
 	});		
 	it('Should perform Add, Edit and Delete', async () =>
 	{
@@ -57,12 +53,14 @@ describe('Amzentrix tests for Admin Settings > Task Statuses', async function ()
 		    		return expect.toHaveString(text, "TASK STATUSES");
 				});;	
     			await page.Log(ts,' [SUCCESSFUL] Validation for Page Header \n');
-
 				passed_p(3,td);
-			} catch (error) {
-				console.log(error);
+			} 
+			catch(error)
+			{
+				console.log('\t   ' + error );
 				failed_p(3,td);
-			}			
+			}
+			
 			// ADD -------------------------------------------------------------------
 			try
 			{ 			
@@ -78,14 +76,17 @@ describe('Amzentrix tests for Admin Settings > Task Statuses', async function ()
 				await page.Log(ts,' Click OK \n');
 				await ks.sendKey("enter");
 				
-				await page.Log(ts," [Add Successful] data found in row 5 \n");	
+				await page.Log(ts," [Add Successful] \n");	
+				await page.validateRow(ts,'#main-content tr td:nth-child(2)','Test1');
 				await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)").then(function(text)
 				{				
 					return expect.toHaveString(text,"Test1")
 				});	
 				passed_p(2,td);
-			} catch (error) {
-				console.log(error);
+			} 
+			catch(error)
+			{
+				console.log('\t   ' + error );
 				failed_p(2,td);
 			}
 			// --------------------------------------------------------------------------
@@ -108,14 +109,17 @@ describe('Amzentrix tests for Admin Settings > Task Statuses', async function ()
 				await page.Log(ts,' Click OK \n');
 				await ks.sendKey("enter");			
 				
-				await page.Log(ts, "[Edit Successful] data found in row 5 \n");
+				await page.Log(ts," [Edit Successful] \n");	
+				await page.validateRow(ts,'#main-content tr td:nth-child(2)','Test2');
 				await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)").then(function(text)
 				{			
 					return expect.toHaveString(text,"Test2")
 				});
 				passed_p(1,td);
-			} catch (error) {
-				console.log(error);
+			} 
+			catch(error)
+			{
+				console.log('\t   ' + error );
 				failed_p(1,td);
 			}
 			// --------------------------------------------------------------------------
@@ -123,7 +127,7 @@ describe('Amzentrix tests for Admin Settings > Task Statuses', async function ()
 			// DELETE -------------------------------------------------------------------
 			try
 			{ 
-				await page.Log(ts, "[For Deletion] data found in row 5 \n");
+				await page.Log(ts, " [For Deletion] data found in row 5 \n");
 				await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)").then(function(text)
 				{				
 					return expect.toHaveString(text,"Test2")
@@ -138,19 +142,22 @@ describe('Amzentrix tests for Admin Settings > Task Statuses', async function ()
 				await page.Log(ts,' Click OK \n');
 				await ks.sendKey("enter");
 				
-				await page.Log(ts,' [Delete Successful] \n');			
+				await page.Log(ts,' [Delete Successful] \n');
+				await page.validateDeletedRow(ts,'#main-content tr td:nth-child(2)','Test2');				
 				passed_p(0,td);
-			} catch (error) {
-				console.log(error);
+			} 
+			catch(error)
+			{
+				console.log('\t   ' + error );
 				failed_p(0,td);
 			}
 			// --------------------------------------------------------------------------
 
-			await fs.appendFile(page.path, ' Admin Settings Task Statuses - Add, Edit and Delete SUCCESSFUL \n', function(err) {}) 			
+			await fs.appendFile( page.path, ' Admin Settings Task Statuses - Add, Edit and Delete SUCCESSFUL \n', function(err) {}) 			
 		}
 		catch(error)
 		{
-			await fs.appendFile(page.path, ' Admin Settings Task Statuses - Add, Edit and Delete FAILED \n', function(err) {
+			await fs.appendFile( page.path, ' Admin Settings Task Statuses - Add, Edit and Delete FAILED \n', function(err) {
                 console.log('\t   ' + error );
             })  
 		}	
