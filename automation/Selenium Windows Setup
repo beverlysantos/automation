@@ -1,0 +1,40 @@
+Selenium setup on Windows
+
+Prerequisite
+- Firefox or Google Chrome installed
+
+1. Download and install NodeJs (https://nodejs.org/en/download/).
+ 
+2. Create a directory for selenium project.
+ 
+4. Download the drivers to allow WebDriver to control the browsers you want to test
+   Geckodriver - (https://github.com/mozilla/geckodriver/releases/) for Firefox
+   Chromedriver - (http://chromedriver.chromium.org/) for Google Chrome
+
+5. Extract the driver to any directory you want.
+
+6. Go to Start menu, right click Computer and click Properties
+
+7. Click Advanced system settings
+
+8. Click Environment Variables
+
+9. Under System Variables, locate Path variable and Click Edit
+
+10. Add the directory where the browser drivers are extracted and click Ok
+
+11. Open Command Prompt (CMD), and go to your Selenium project folder,
+    Create package.json "npm init" and
+    run this command to install the necessary dependencies
+    "npm install selenium-webdriver chai".
+    For mocha run this command to install it globally
+    "npm install -g mocha".
+
+14. You can start creating test scripts.
+    enter "mocha -t <timeout ms> <path/to/file>" in cmd
+    to run your test scripts.
+
+Docs:
+- Selenium NodeJs (https://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/)
+- Mocha (https://mochajs.org/)
+- Chai (https://www.chaijs.com/api/)
