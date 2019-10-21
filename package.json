@@ -89,7 +89,7 @@
     "bim_lr": "mocha 'scripts/bim_recom.js' --timeout 10000000000",
     "bim_ti": "mocha 'scripts/bim_task.js' --timeout 10000000000",
     "bim_pr": "mocha 'scripts/bim_price.js' --timeout 10000000000",
-    "set_asin": "mocha 'scripts/p_asins.js' --timeout 10000000000",                                 
+    "set_asin": "mocha 'scripts/p_asins.js' --timeout 10000000000", 
     "set_fbt": "mocha 'scripts/p_feedbacktemplates.js' --timeout 10000000000",
     "set_prodkey": "mocha 'scripts/p_productkeywords.js' --timeout 10000000000",
     "set_skugrp": "mocha 'scripts/p_sku_group_maintenance_settings.js' --timeout 10000000000",
