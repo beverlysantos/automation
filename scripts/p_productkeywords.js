@@ -55,7 +55,7 @@ describe('Amzentrix tests for Store Settings > Product Keywords', async function
 			{ 	
 		    	await page.getClassText("page-header").then(function(text)
 				{
-		    		return expect.toHaveString(text, "PRODUCT KEYWORDS");
+		    		return expect.toHaveString(text, "PRODUCT");
 				});
     			await page.Log(ts,' [SUCCESSFUL] Validation for Page Header \n');
 
