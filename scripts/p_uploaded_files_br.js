@@ -45,7 +45,7 @@ describe('Amzentrix tests for Store Settings > Uploaded Files (Business Reports)
 		await ks.sendKeys(['down','down','down']);
 		
 		await page.Log(ts,' Click View icon in Uploaded Files (Business Reports) \n');	
-		await page.clickId('business-report-files');
+		await page.Store_Settings('Uploaded Files (Business Reports) BIM');
 	});
 	
 	it('Should perform Search', async () =>

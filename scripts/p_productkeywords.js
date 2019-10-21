@@ -44,7 +44,7 @@ describe('Amzentrix tests for Store Settings > Product Keywords', async function
 		await page.clickLink('Settings');
 		
 		await page.Log(ts,' Click View icon in Producet Keywords \n');	
-		await page.clickId('product-keywords');
+		await page.Store_Settings('Product Keywords BIM');
 	});
 	
 	it('Should perform Add, Edit and Delete', async () =>

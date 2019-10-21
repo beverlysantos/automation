@@ -49,7 +49,7 @@ describe('Amzentrix tests for Store Settings > Feedback Templates', async functi
         });
 		
 		await page.Log(ts,' Click View icon in Feedback Templates \n');	
-		await page.Store_Settings('Feedback Templates');
+		await page.Store_Settings('Feedback Templates CRM');
 	});
 	
 	it('Should perform Add, Edit and Delete', async () =>
