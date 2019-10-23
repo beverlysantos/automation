@@ -43,7 +43,7 @@ describe('Amzentrix tests for Store Settings > Skus', async function ()
 		await page.clickLink('Settings');
 		
 		await page.Log(ts,' Click View icon in Skus \n');	
-		await page.clickId('skus');
+		await page.Store_Settings('Skus CRM');
 	});
 	
 	it('Should perform Add, Edit and Delete', async () =>

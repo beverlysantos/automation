@@ -44,7 +44,7 @@ describe('Amzentrix tests for Store Settings > Product Keywords', async function
 		await page.clickLink('Settings');
 		
 		await page.Log(ts,' Click View icon in Producet Keywords \n');	
-		await page.clickId('product-keywords');
+		await page.Store_Settings('Product Keywords BIM');
 	});
 	
 	it('Should perform Add, Edit and Delete', async () =>
@@ -55,7 +55,7 @@ describe('Amzentrix tests for Store Settings > Product Keywords', async function
 			{ 	
 		    	await page.getClassText("page-header").then(function(text)
 				{
-		    		return expect.toHaveString(text, "PRODUCT KEYWORDS");
+		    		return expect.toHaveString(text, "PRODUCT");
 				});
     			await page.Log(ts,' [SUCCESSFUL] Validation for Page Header \n');
 
@@ -68,7 +68,7 @@ describe('Amzentrix tests for Store Settings > Product Keywords', async function
 			try
 			{ 			
 				await page.Log(ts,' Click Add button \n');
-				await page.clickCss('#main-content > section > div:nth-child(1) > div > h3 > div > div > a.btn.btn-info');
+				await page.clickXpath("//*[@id='main-content']//div[1]//div/div/a[2]");
 				
 				await page.Log(ts," Input 'testz' in Name field \n");
 				await page.writeById('name', 'testz');
@@ -80,7 +80,7 @@ describe('Amzentrix tests for Store Settings > Product Keywords', async function
 				await ks.sendKey("enter");
 				
 				await page.Log(ts,' Click Search dropdown \n');
-				await page.clickCss('#main-content > section > div:nth-child(1) > div > h3 > div > div > a.btn.btn-primary');
+				await page.clickXpath("//*[@id='main-content']//div[1]//div/div/a[1]");				
 				
 				await page.Log(ts," Input 'testz' in Search field \n");
 				await page.writeById('name', 'testz');
@@ -119,7 +119,7 @@ describe('Amzentrix tests for Store Settings > Product Keywords', async function
 				await ks.sendKey("enter");
 				
 				await page.Log(ts,' Click Search dropdown \n');
-				await page.clickCss('#main-content > section > div:nth-child(1) > div > h3 > div > div > a.btn.btn-primary');
+				await page.clickXpath("//*[@id='main-content']//div[1]//div/div/a[1]");				
 				
 				await page.Log(ts," Input 'testa' in Search field \n");
 				await page.writeById('name', 'testa');

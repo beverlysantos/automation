@@ -40,12 +40,10 @@ describe('Amzentrix tests for Reports Sales Information', async function(){
         await page.clickXpath("//*[@id='sidebar']/ul/li[7]/a/span");
 
         await page.Log(ts, "user scroll down \n");
-        await ks.sendKeys(['down', 'down', 'down', 'down', 'down', 'down']);
-        await ks.sendKeys(['down', 'down', 'down', 'down', 'down', 'down']);
-
+       
         try{
         await page.Log(ts, "click Sales Information \n");
-        await page.clickXpath("//*[@id=\"main-content\"]/section/div[4]/div/div/div/table/tbody/tr[15]/td[1]/div/a[1]/span");
+        await page.Store_Reports_BIM("Sales Information");
               passed_a(0,td)
 
         } catch (error){
