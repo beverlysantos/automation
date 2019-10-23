@@ -43,7 +43,7 @@ describe('Amzentrix tests for Store Settings > Sku Group Maintenance Settings', 
 		await page.clickLink('Settings');
 		
 		await page.Log(ts,' Click View icon in Sku Group Maintenance Settings \n');	
-		await page.clickId('sku-group-maintenance-settings');
+		await page.Store_Settings('Sku Group Maintenance Settings CRM');
 	});
 	
 	it('Should perform Add, Edit and Delete', async () =>

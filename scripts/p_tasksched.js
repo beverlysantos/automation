@@ -45,7 +45,7 @@ describe('Amzentrix tests for Task Schedules', async function ()
 		await ks.sendKeys(['down','down','down']);
 		
 		await page.Log(ts,' Click View icon in Task Schedules \n');	
-		await page.clickId('task-schedules');
+		await page.Store_Settings('Task Schedules SAM');
 	});
 	
 	it('Should perform Search', async () =>

@@ -45,7 +45,8 @@ describe('Amzentrix tests for Store Settings > Uploaded Files (Fulfillments)', a
 		await ks.sendKeys(['down','down','down']);
 		
 		await page.Log(ts,' Click View icon in Uploaded Files (Fulfillments) \n');	
-		await page.clickId('fulfillment-uploaded-files');
+		await page.Store_Settings('Uploaded Files (Fulfillments) CRM');
+		
 	});
 	
 	it('Should perform Search', async () =>
