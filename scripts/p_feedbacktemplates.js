@@ -7,6 +7,7 @@ const Page = require('../lib/webdrivers'),
 	  
 var td = '/TC_Feedback_Templates.csv';
 var ts = '/TS_Feedback_Templates.txt';
+var td_id = 'TD_059';
 
 describe('Amzentrix tests for Store Settings > Feedback Templates', async function ()
 {
@@ -77,32 +78,33 @@ describe('Amzentrix tests for Store Settings > Feedback Templates', async functi
 				await page.Log(ts,' Click Add Asin button \n');
 				await page.clickCss('#main-content  div:nth-child(1) > div > h3 > div > div > a');
 				
-				await page.Log(ts," Input 'Testing' in Name field \n");
-				await page.writeById('title', 'Testing');
+				await page.Log(ts," Input " + String(await page.getTD(td_id,3)) + " in Name field \n");
+				await page.writeById('title', page.getTD(td_id,3));
 				
-				await page.Log(ts," Input 'Testing@testing.com' in From field \n");
-				await page.writeById('from', 'Testing@testing.com');
+				await page.Log(ts," Input " + String(await page.getTD(td_id,4)) + " in From field \n");
+				await page.writeById('from', page.getTD(td_id,4));
 				
-				await page.Log(ts," Input 'Challenger USA' in From[Label] field \n");
-				await page.writeById('from_label', 'Challenger USA');
+				await page.Log(ts," Input " + String(await page.getTD(td_id,5)) + " in From[Label] field \n");
+				await page.clearId('from_label');
+				await page.writeById('from_label', page.getTD(td_id,5));
 				
-				await page.Log(ts," Input 'Feedback request from Test seller TestingUSA (Test: [[TEST_TEST]])' in Subject field \n");
-				await page.writeById('subject', 'Feedback request from Test seller TestingUSA (Test: [[TEST_TEST]])');
+				await page.Log(ts," Input " + String(await page.getTD(td_id,6)) + " in Subject field \n");
+				await page.writeById('subject', page.getTD(td_id,6));
 				
-				await page.Log(ts," Input 'Testing' in Body textarea \n");
+				await page.Log(ts," Input " + String(await page.getTD(td_id,7)) + " in Body textarea \n");
 				await page.clickId('cke_33');				
-				await page.writeByCss('#cke_1_contents > textarea', 'Testing');
+				await page.writeByCss('#cke_1_contents > textarea', page.getTD(td_id,7));
 				
+				//await page.Log(ts," Input " + String(await page.getTD(td_id,7)) + " in Body textarea \n");				
+				//await page.writeById('editor_body', page.getTD(td_id,7));
+							
 				await ks.sendKey(['tab']);
 				
-				await page.Log(ts,' Click Status dropdown \n');	
-				await page.clickId('status_id');
-				
-				await page.Log(ts,' Select For 1st Feedback E-Mail \n');	
-				await page.clickXpath('//*[@id="status_id"]/option[2]');
+				await page.Log(ts," Select " + String(await page.getTD(td_id,8)) + " in Status dropdown \n");
+				await page.selectDrpdwn('#status_id', String(await page.getTD(td_id,8)));
 							
-				await page.Log(ts,' Select Amazon.com \n');
-				await page.clickCss('#emailTemplateForm li:nth-child(2) > input');
+				await page.Log(ts," Select " + String(await page.getTD(td_id,9)) + " \n");
+				await page.selectCheckbox('#emailTemplateForm li', 'input', String(await page.getTD(td_id,9)));
 				
 				await page.Log(ts,' Click Submit button \n');
 				await page.clickClassName('btn btn-info addbtn');
@@ -112,11 +114,10 @@ describe('Amzentrix tests for Store Settings > Feedback Templates', async functi
 				
 				await ks.sendKeys(['Down','Down','Down','Down','Down','Down','Down']);	
 				
-				await page.Log(ts," [Add Successful] data found in row 5 \n");	
-				await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)").then(function(text)
-				{				
-					return expect.toHaveString(text, 'Testing')
-				});	
+				await page.Log(ts," [Add Successful] data found in row 5 \n");
+				const val1 = await page.getCssText('tbody tr:nth-last-child(1) td:nth-child(2)');
+				expect.toHaveString(val1, String(await page.getTD(td_id,3)));
+
 				passed_p(2,td);
 			} 
 			catch(error)
@@ -135,34 +136,34 @@ describe('Amzentrix tests for Store Settings > Feedback Templates', async functi
 				await page.Log(ts,' Clear Name field \n');
 				await page.clearId('title');
 				
-				await page.Log(ts," Input 'Testing1' in Name field \n");
-				await page.writeById('title', 'Testing1');
+				await page.Log(ts," Input " + String(await page.getTD(td_id,10)) + " in Name field \n");
+				await page.writeById('title', page.getTD(td_id,10));
 				
 				await page.Log(ts,' Clear From field \n');
 				await page.clearId('from');
 				
-				await page.Log(ts," Input 'Testing@test.com' in From field \n");
-				await page.writeById('from', 'Testing@test.com');
+				await page.Log(ts," Input " + String(await page.getTD(td_id,11)) + " in From field \n");
+				await page.writeById('from', page.getTD(td_id,11));
 				
 				await page.Log(ts,' Clear From [Label] field \n');
 				await page.clearId('from_label');
 				
-				await page.Log(ts," Input 'Challenger USA' in From[Label] field \n");
-				await page.writeById('from_label', 'Challenger USA');
-				
+				await page.Log(ts," Input " + String(await page.getTD(td_id,12)) + " in From[Label] field \n");
+				await page.writeById('from_label', page.getTD(td_id,12));
+			
 				await page.Log(ts,' Clear Subject field \n');
 				await page.clearId('subject');
 				
-				await page.Log(ts," Input 'Feedback request from Test seller TestingUSA (Test: [[TEST_TEST]])' in Subject field \n");
-				await page.writeById('subject', 'Feedback request from Test seller TestingUSA (Test: [[TEST_TEST]])');			
+				await page.Log(ts," Input " + String(await page.getTD(td_id,13)) + " in Subject field \n");
+				await page.writeById('subject', page.getTD(td_id,13));			
 				
 				await page.clickId('cke_33');
 				
 				await page.Log(ts,' Clear Body field \n');
 				await page.clearCss('#cke_1_contents > textarea');
 				
-				await page.Log(ts," Input 'Testing' in Body textarea \n");				
-				await page.writeByCss('#cke_1_contents > textarea', 'Testing');
+				await page.Log(ts," Input " + String(await page.getTD(td_id,14)) + " in Body textarea \n");				
+				await page.writeByCss('#cke_1_contents > textarea', page.getTD(td_id,14));
 				
 				await ks.sendKey(['tab']);
 				
@@ -174,11 +175,10 @@ describe('Amzentrix tests for Store Settings > Feedback Templates', async functi
 				
 				await ks.sendKeys(['Down','Down','Down','Down','Down','Down','Down']);	
 				
-				await page.Log(ts," [Update Successful] data found in row 5 \n");	
-				await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)").then(function(text)
-				{				
-					return expect.toHaveString(text, 'Testing1')
-				});				
+				await page.Log(ts," [Update Successful] data found in row 5 \n");
+				const val1 = await page.getCssText('tbody tr:nth-last-child(1) td:nth-child(2)');
+				expect.toHaveString(val1, String(await page.getTD(td_id,10)));
+			
 				passed_p(1,td);
 			} 
 			catch(error)
@@ -192,11 +192,9 @@ describe('Amzentrix tests for Store Settings > Feedback Templates', async functi
 			try
 			{
 				await ks.sendKeys(['Down','Down','Down','Down','Down','Down','Down']);	
-				await page.Log(ts, " [For Deletion] data found in row 5 \n");	
-				await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)").then(function(text)
-				{
-					return expect.toHaveString(text,"Testing1")
-				});
+				await page.Log(ts, " [For Deletion] \n");
+				const val1 = await page.getCssText('tbody tr:nth-last-child(1) td:nth-child(2)');
+				expect.toHaveString(val1, String(await page.getTD(td_id,10)));				
 				
 				await page.Log(ts,' Click Delete icon \n');
 				await page.clickCss("table tbody  tr:nth-last-child(1) a:nth-child(2)");
@@ -210,6 +208,7 @@ describe('Amzentrix tests for Store Settings > Feedback Templates', async functi
 				await ks.sendKey("enter");
 				
 				await page.Log(ts, " [Delete Successful] \n");
+				await page.validateDeletedRow(ts,"#main-content tr td:nth-child(2)", String(await page.getTD(td_id,10)));
 				passed_p(0,td);
 			} 
 			catch(error)
@@ -219,11 +218,11 @@ describe('Amzentrix tests for Store Settings > Feedback Templates', async functi
 			}
 			// --------------------------------------------------------------------------
 			
-			await fs.appendFile( page.path, ' Store Settings Feedback Templates SUCCESSFUL \n', function(err) {}) 			
+			await fs.appendFile( page.path, ' Store Settings Feedback Templates - Add, Edit and Delete SUCCESSFUL \n', function(err) {}) 			
 		}
 		catch(error)
 		{
-			await fs.appendFile( page.path, ' Store Settings Feedback Templates FAILED \n', function(err) 
+			await fs.appendFile( page.path, ' Store Settings Feedback Templates - Add, Edit and Delete FAILED \n', function(err) 
 			{
                 console.log('\t   ' + error );
             })  
