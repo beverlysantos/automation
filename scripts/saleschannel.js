@@ -1,18 +1,19 @@
 const Page = require('../lib/webdrivers'),
-Expect = require('../lib/chai-expect'),
-fs  = require("fs"),
-time = require('node-get-time');
-mkdirp = require('mkdirp');
-var ks = require('node-key-sender');
+	  Expect = require('../lib/chai-expect'),
+	  fs  = require("fs"),
+      time = require('node-get-time');
+      mkdirp = require('mkdirp');
+	  var ks = require('node-key-sender');
 	  
-var td = '/Sales Channel.csv';
-var ts = '/Sales_Channel.txt';
+var td = '/TC_Sales Channel.csv';
+var ts = '/TS_Sales_Channel.txt';
+var td_id = 'TD_017';
 
-describe('Amzentrix tests for Sales Channel', async function () {
-beforeEach(async () => 
-{
-	page = new Page();
-	expect = new Expect();
+describe('Amzentrix tests for Admin Settings > Sales Channel', async function () {
+	beforeEach(async () => 
+	{
+		page = new Page();
+        expect = new Expect();
 
 		await page.CreateLog(ts,'Sales Channel \n');
 		await page.Log(ts,' Navigate to http://www.amzentrix.uat40/login \n');
@@ -22,7 +23,7 @@ beforeEach(async () =>
 		await page.writeByName("email", "jbeverly_qa@amzentrix.com");
 		
 		await page.Log(ts,' Input Password: ***** \n');
-        	await page.writeByName("password", "password");
+        await page.writeByName("password", "password");
 		
 		await page.Log(ts,' Click Submit button \n');
 		await page.Login_Submit_Click();		
@@ -65,17 +66,14 @@ beforeEach(async () =>
 				await page.Log(ts,' Click Add button \n');			
 				await page.Addbtn_Click();
 				
-				await page.Log(ts," Input 'test29' in Name field \n");
-				await page.writeById("name", "test29");
+				await page.Log(ts," Input " + String(await page.getTD(td_id,3)) + " in Name field \n");
+				await page.writeById("name", page.getTD(td_id,3));
 				
-				await page.Log(ts,' Click Country dropdown \n');	
-				await page.clickId("country_id");
+				await page.Log(ts," Select " + String(await page.getTD(td_id,4)) + " in Country dropdown \n");
+				await page.selectDrpdwn('#country_id', String(await page.getTD(td_id,4)));
 				
-				await page.Log(ts," Select 'Andorra' \n");	
-				await page.clickXpath("//*[@id='country_id']/option[2]");
-				
-				await page.Log(ts," Input 'test' in Marketplace ID field \n");
-				await page.writeById("marketplace_id", "test");
+				await page.Log(ts," Input " + String(await page.getTD(td_id,5)) + " in Marketplace ID field \n");
+				await page.writeById("marketplace_id", page.getTD(td_id,5));
 				
 				await page.Log(ts,' Click Add button \n');
 				await page.clickClassName("btn btn-info addbtn");
@@ -84,11 +82,10 @@ beforeEach(async () =>
 				await ks.sendKey("enter");				
 				
 				await page.Log(ts," [Add Successful] \n");
-				await page.validateRow(ts, '#main-content tbody tr td:nth-child(2)','test29');
-				await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)").then(function(text)
-				{
-					return expect.toHaveString(text,"test29")
-				});	
+				await page.validateRow(ts, '#main-content tbody tr td:nth-child(2)', String(await page.getTD(td_id,3)));
+				const val1 = await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)");
+				expect.toHaveString(val1, String(await page.getTD(td_id,3)));
+
 				passed_p(2,td);
 			} 
 			catch(error)
@@ -106,20 +103,17 @@ beforeEach(async () =>
 				await page.Log(ts,' Clear Name field \n');
 				await page.clearId("name");
 				
-				await page.Log(ts," Input 'test30' in Name field \n");
-				await page.writeById("name", "test30");
+				await page.Log(ts," Input " + String(await page.getTD(td_id,6)) + " in Name field \n");
+				await page.writeById("name", page.getTD(td_id,6));
 				
-				await page.Log(ts,' Click Country dropdown \n');	
-				await page.clickId("country_id");
-				
-				await page.Log(ts," Select 'United Arab Emirates' \n");	
-				await page.clickXpath("//*[@id='country_id']/option[3]");
+				await page.Log(ts," Select " + String(await page.getTD(td_id,7)) + " in Country dropdown \n");
+				await page.selectDrpdwn('#country_id', String(await page.getTD(td_id,7)));
 				
 				await page.Log(ts,' Clear Name field \n');
 				await page.clearId("marketplace_id");
 				
-				await page.Log(ts," Input 'testing' in Marketplace ID field \n");
-				await page.writeById("marketplace_id", "testing");
+				await page.Log(ts," Input " + String(await page.getTD(td_id,8)) + " in Marketplace ID field \n");
+				await page.writeById("marketplace_id", page.getTD(td_id,8));
 				
 				await page.Log(ts,' Click Update button \n');	
 				await page.clickClassName("btn btn-success editbtn");
@@ -128,10 +122,10 @@ beforeEach(async () =>
 				await ks.sendKey("enter");
 				
 				await page.Log(ts," [Edit Successful] \n");
-				await page.validateRow(ts, '#main-content tbody tr td:nth-child(2)','test30');	
-				await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)").then(function(text){
-					return expect.toHaveString(text,"test30")
-				});
+				await page.validateRow(ts, '#main-content tbody tr td:nth-child(2)', String(await page.getTD(td_id,6)));	
+				const val1 = await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)");
+				expect.toHaveString(val1, String(await page.getTD(td_id,6)));
+
 				passed_p(1,td);
 			} 
 			catch(error)
@@ -145,10 +139,10 @@ beforeEach(async () =>
 			try
 			{ 
 				await page.Log(ts," [For Deletion] \n");
-				await page.validateRow(ts, '#main-content tbody tr td:nth-child(2)','test30');	
-				await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)").then(function(text){
-					return expect.toHaveString(text,"test30")
-				});
+				await page.validateRow(ts, '#main-content tbody tr td:nth-child(2)', String(await page.getTD(td_id,6)));
+				
+				const val1 = await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)");
+				expect.toHaveString(val1, String(await page.getTD(td_id,6)));
 				
 				await page.Log(ts,' Click Delete icon \n');
 				await page.clickCss("table tbody  tr:nth-last-child(1) a:nth-child(2)"); 
@@ -160,7 +154,8 @@ beforeEach(async () =>
 				await ks.sendKey("enter");
 				
 				await page.Log(ts, " [Delete Successful] \n");
-				await page.validateDeletedRow(ts, '#main-content tbody tr td:nth-child(2)','test30');
+				await page.validateDeletedRow(ts, '#main-content tbody tr td:nth-child(2)', String(await page.getTD(td_id,6)));			
+				
 				passed_p(0,td);
 			} 
 			catch(error)
@@ -170,14 +165,14 @@ beforeEach(async () =>
 			}
 			// --------------------------------------------------------------------------
 
-			await fs.appendFile( page.path, 'Sales Channel SUCCESSFUL \n', function(err) {}) 			
+			await fs.appendFile( page.path, ' Admin Settings Sales Channel - Add, Edit and Delete SUCCESSFUL \n', function(err) {}) 			
 		}
 		catch(error)
 		{
-			await fs.appendFile( page.path, 'Sales Channel FAILED \n', function(err) {
+			await fs.appendFile( page.path, ' Admin Settings Sales Channel - Add, Edit and Delete FAILED \n', function(err) {
                 console.log('\t   ' + error );
             })  
 		}	
 	});
 	afterEach(async () => page.quit());	
-}); 
+});
