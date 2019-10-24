@@ -8,7 +8,7 @@ const Page = require('../lib/webdrivers'),
 var td = '/Restock Inventory Report.csv';
 var ts = '/Restock_Inventory_Report.txt';
 
-describe('Amzentrix tests for Reports > Restock Inventory Report', async function ()
+describe('Amzentrix tests for Restock Inventory Report', async function ()
 {
 	beforeEach(async () => 
 	{ 
@@ -126,11 +126,11 @@ describe('Amzentrix tests for Reports > Restock Inventory Report', async functio
 			}
 			//-----------------------------------------------------------------------------------------------
 						
-			await fs.appendFile( page.path, ' Reports Restock Inventory Report - Search SUCCESSFUL \n', function(err) {}) 			
+			await fs.appendFile( page.path, 'Restock Inventory Report SUCCESSFUL \n', function(err) {}) 			
 		}
 		catch(error)
 		{
-			await fs.appendFile( page.path, ' Reports Restock Inventory Report - Search FAILED \n', function(err) 
+			await fs.appendFile( page.path, 'Restock Inventory Report FAILED \n', function(err) 
 			{
                 console.log('\t   ' + error );
             })  

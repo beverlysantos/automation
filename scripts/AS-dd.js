@@ -8,7 +8,7 @@ var ks = require('node-key-sender');
 var td = '/Currencies.csv';
 var ts = '/Currencies.txt';
 
-describe('Amzentrix tests for Admin Settings - Detailed Desposition', async function () {
+describe('Amzentrix tests for Detailed Desposition', async function () {
     beforeEach(async () => {	
     	page = new Page();
     	expect = new Expect();
@@ -106,11 +106,11 @@ describe('Amzentrix tests for Admin Settings - Detailed Desposition', async func
 				failed(3,td);
 			}
 			
-			await fs.appendFile(page.path, 'Admin Settings - Detailed Desposition SUCCESSFUL\n', function(err) {
+			await fs.appendFile(page.path, 'Detailed Desposition SUCCESSFUL\n', function(err) {
 
 			})
 		}catch (error){
-			await fs.appendFile(page.path, 'Admin Settings - Detailed Desposition FAILED\n', function(err) {
+			await fs.appendFile(page.path, 'Detailed Desposition FAILED\n', function(err) {
 				console.log('\t'+error);
 			})
 			console.log(error)

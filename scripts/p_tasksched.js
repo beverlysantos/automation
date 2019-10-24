@@ -174,11 +174,11 @@ describe('Amzentrix tests for Task Schedules', async function ()
 			}
 			// --------------------------------------------------------------------------
 			
-			await fs.appendFile( page.path, ' Store Settings Task Schedules - Add, Edit and Delete SUCCESSFUL \n', function(err) {}) 			
+			await fs.appendFile( page.path, 'Task Schedules SUCCESSFUL \n', function(err) {}) 			
 		}
 		catch(error)
 		{
-			await fs.appendFile( page.path, ' Store Settings Task Schedules - Add, Edit and Delete FAILED \n', function(err) 
+			await fs.appendFile( page.path, 'Task Schedules FAILED \n', function(err) 
 			{
                 console.log('\t   ' + error );
             })  

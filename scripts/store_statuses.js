@@ -8,7 +8,7 @@ var ks = require('node-key-sender');
 var td = '/Store Statuses.csv';
 var ts = '/Store Statuses.txt';
 
-describe('Amzentrix tests for Admin Settings', async function () {
+describe('Amzentrix tests for Admin Store Statuses', async function () {
 	beforeEach(async () => 
 	{                                                         // mgrurun kada foreachs
 		page = new Page();
@@ -141,11 +141,11 @@ describe('Amzentrix tests for Admin Settings', async function () {
 			}
 			// --------------------------------------------------------------------------
 
-			await fs.appendFile(page.path , ' Admin Settings - Store Statuses SUCCESSFUL \n', function(err) {}) 			
+			await fs.appendFile(page.path , '- Store Statuses SUCCESSFUL \n', function(err) {}) 			
 		}
 		catch(error)
 		{
-			await fs.appendFile(page.path , ' Admin Settings Store Statuses FAILED \n', function(err) {
+			await fs.appendFile(page.path , 'Store Statuses FAILED \n', function(err) {
                 console.log('\t   ' + error );
             })  
 		}	

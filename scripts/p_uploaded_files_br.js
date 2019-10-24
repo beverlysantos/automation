@@ -96,11 +96,11 @@ describe('Amzentrix tests for Store Settings > Uploaded Files (Business Reports)
 			}
 			// --------------------------------------------------------------------------
 			
-			await fs.appendFile( page.path, ' Store Settings Uploaded Files (Business Reports) - Search SUCCESSFUL \n', function(err) {}) 			
+			await fs.appendFile( page.path, 'Uploaded Files (Business Reports) SUCCESSFUL \n', function(err) {}) 			
 		}
 		catch(error)
 		{
-			await fs.appendFile( page.path, ' Store Settings Uploaded Files (Business Reports) - Search FAILED \n', function(err) 
+			await fs.appendFile( page.path, 'Uploaded Files (Business Reports) FAILED \n', function(err) 
 			{
                 console.log('\t   ' + error );
             })  

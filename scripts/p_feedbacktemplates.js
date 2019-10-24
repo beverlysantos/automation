@@ -5,8 +5,8 @@ const Page = require('../lib/webdrivers'),
       mkdirp = require('mkdirp');
 	  var ks = require('node-key-sender');
 	  
-var td = '/TC_Feedback_Templates.csv';
-var ts = '/TS_Feedback_Templates.txt';
+var td = '/Feedback_Templates.csv';
+var ts = '/Feedback_Templates.txt';
 var td_id = 'TD_059';
 
 describe('Amzentrix tests for Store Settings > Feedback Templates', async function ()
@@ -218,11 +218,11 @@ describe('Amzentrix tests for Store Settings > Feedback Templates', async functi
 			}
 			// --------------------------------------------------------------------------
 			
-			await fs.appendFile( page.path, ' Store Settings Feedback Templates - Add, Edit and Delete SUCCESSFUL \n', function(err) {}) 			
+			await fs.appendFile( page.path, 'Feedback Templates SUCCESSFUL \n', function(err) {}) 			
 		}
 		catch(error)
 		{
-			await fs.appendFile( page.path, ' Store Settings Feedback Templates - Add, Edit and Delete FAILED \n', function(err) 
+			await fs.appendFile( page.path, 'Feedback Templates FAILED \n', function(err) 
 			{
                 console.log('\t   ' + error );
             })  

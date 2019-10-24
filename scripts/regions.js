@@ -8,7 +8,7 @@ var ks = require('node-key-sender');
 var td = '/Regions.csv';
 var ts = '/Regions.txt';
 
-describe('Amzentrix tests for Admin Settings - Regions', async function () {
+describe('Amzentrix tests for  Regions', async function () {
 	beforeEach(async () => 
 	{                                                         // mgrurun kada foreachs
 		page = new Page();
@@ -158,11 +158,11 @@ describe('Amzentrix tests for Admin Settings - Regions', async function () {
 			}
 			// --------------------------------------------------------------------------
 
-			await fs.appendFile(page.path, ' Admin Settings - Regions SUCCESSFUL \n', function(err) {}) 			
+			await fs.appendFile(page.path, 'Regions SUCCESSFUL \n', function(err) {}) 			
 		}
 		catch(error)
 		{
-			await fs.appendFile(page.path, ' Admin Settings - Regions FAILED \n', function(err) {
+			await fs.appendFile(page.path, 'Regions FAILED \n', function(err) {
                 console.log('\t   ' + error );
             })  
 		}	

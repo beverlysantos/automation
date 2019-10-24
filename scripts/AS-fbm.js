@@ -116,11 +116,11 @@ describe('Amzentrix tests for FBM Fields', async function () {
 				console.log(error);
 				failed(3,td);
 			}
-			await fs.appendFile(page.path, 'Admin Settings - FBM Fields SUCCESSFUL\n', function(err) {
+			await fs.appendFile(page.path, 'FBM Fields SUCCESSFUL\n', function(err) {
 
 			})
 			}catch (error){
-			await fs.appendFile(page.path, 'Admin Settings - FBM Fields FAILED\n', function(err) {
+			await fs.appendFile(page.path, 'FBM Fields FAILED\n', function(err) {
 				console.log('\t'+error);
 			})
 			console.log(error)

@@ -8,7 +8,7 @@ var ks = require('node-key-sender');
 var td = '/Users.csv';
 var ts = '/Users.txt';
 
-describe('Amzentrix tests for Admin Settings - Users', async function () {
+describe('Amzentrix tests for Users', async function () {
 	beforeEach(async () => 
 	{
 		page = new Page();

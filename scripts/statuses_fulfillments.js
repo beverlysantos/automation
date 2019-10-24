@@ -8,7 +8,7 @@ var ks = require('node-key-sender');
 var td = '/Statuses(Fulfillments).csv';
 var ts = '/Statuses(Fulfillments).txt';
 
-describe('Amzentrix tests for Admin Settings - Statuses(Fulfillments)', async function () {
+describe('Amzentrix tests for Statuses(Fulfillments)', async function () {
 	beforeEach(async () => 
 	{                                                         // mgrurun kada foreachs
 		page = new Page();
@@ -153,11 +153,11 @@ describe('Amzentrix tests for Admin Settings - Statuses(Fulfillments)', async fu
 			}
 			// --------------------------------------------------------------------------
 
-			await fs.appendFile(page.path , ' Admin Settings - Statuses (Fulfillments) SUCCESSFUL \n', function(err) {}) 			
+			await fs.appendFile(page.path , 'Statuses (Fulfillments) SUCCESSFUL \n', function(err) {}) 			
 		}
 		catch(error)
 		{
-			await fs.appendFile(page.path , ' Admin Settings - Statuses (Fulfillments) FAILED \n', function(err) {
+			await fs.appendFile(page.path , 'Statuses (Fulfillments) FAILED \n', function(err) {
                 console.log('\t   ' + error );
             })  
 		}	

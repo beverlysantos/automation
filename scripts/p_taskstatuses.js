@@ -5,10 +5,10 @@ const Page = require('../lib/webdrivers'),
       mkdirp = require('mkdirp');
 	  var ks = require('node-key-sender');
 	  
-var td = '/TC_Task Statuses.csv';
-var ts = '/TS_Task_Statuses.txt';
+var td = '/Task Statuses.csv';
+var ts = '/Task_Statuses.txt';
 
-describe('Amzentrix tests for Admin Settings > Task Statuses', async function () {
+describe('Amzentrix tests for Task Statuses', async function () {
 	beforeEach(async () => 
 	{
 		page = new Page();
@@ -153,11 +153,11 @@ describe('Amzentrix tests for Admin Settings > Task Statuses', async function ()
 			}
 			// --------------------------------------------------------------------------
 
-			await fs.appendFile( page.path, ' Admin Settings Task Statuses - Add, Edit and Delete SUCCESSFUL \n', function(err) {}) 			
+			await fs.appendFile( page.path, 'Task Statuses SUCCESSFUL \n', function(err) {}) 			
 		}
 		catch(error)
 		{
-			await fs.appendFile( page.path, ' Admin Settings Task Statuses - Add, Edit and Delete FAILED \n', function(err) {
+			await fs.appendFile( page.path, 'Task Statuses FAILED \n', function(err) {
                 console.log('\t   ' + error );
             })  
 		}	

@@ -8,7 +8,7 @@ var ks = require('node-key-sender');
 var td = '/Note Statuses.csv';
 var ts = '/Note Statuses.txt'; 
   //fulfillmentcenter
-    describe('Amzentrix tests for Admin Settings - Note Statuses', async function () {
+    describe('Amzentrix tests for Note Statuses', async function () {
     beforeEach (async () =>  {
         page = new Page();
         expect = new Expect();
@@ -133,12 +133,12 @@ var ts = '/Note Statuses.txt';
               console.log('\t   ' + error );
               failed_a(3,td);
         }
-         await fs.appendFile(page.path, ' Admin Settings - Note Statuses  SUCCESSFUL \n', function(err) {
+         await fs.appendFile(page.path, 'Note Statuses  SUCCESSFUL \n', function(err) {
   
        })
 
     } catch (error) {
-      await fs.appendFile(page.path, ' Admin Settings - Note Statuses FAILED  \n', function(err) {
+      await fs.appendFile(page.path, 'Note Statuses FAILED  \n', function(err) {
           console.log('\t   ' + error );
         })
       //console.log(error)

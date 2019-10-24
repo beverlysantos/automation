@@ -88,11 +88,11 @@ describe('Amzentrix tests for Store Settings > Skus', async function ()
 				failed(4,td);
 			}	
 			
-			await fs.appendFile( page.path, ' Store Settings Skus - Add and Edit SUCCESSFUL \n', function(err) {}) 			
+			await fs.appendFile( page.path, 'Skus - Add and Edit SUCCESSFUL \n', function(err) {}) 			
 		}
 		catch(error)
 		{
-			await fs.appendFile( page.path, ' Store Settings Skus - Add and Edit FAILED \n', function(err) 
+			await fs.appendFile( page.path, 'Skus - Add and Edit FAILED \n', function(err) 
 			{
                 console.log('\t   ' + error );
             })  

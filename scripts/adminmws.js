@@ -9,7 +9,7 @@ var td = '/MWS Credentials.csv';
 var ts = '/MWS Credentials.txt';
 
 //mwscredentials
- describe('Amzentrix tests for Admin Settings - MWS Credentials', async function () {
+ describe('Amzentrix tests for MWS Credentials', async function () {
     beforeEach (async () =>  {
         page = new Page();
         expect = new Expect();
@@ -145,12 +145,12 @@ var ts = '/MWS Credentials.txt';
               console.log('\t   ' + error );
               failed_a(3,td);
       }
-       await fs.appendFile(page.path, ' Admin Settings - MWS Credentials SUCCESSFUL \n', function(err) {
+       await fs.appendFile(page.path, ' MWS Credentials SUCCESSFUL \n', function(err) {
 
        })
 
   } catch (error) {
-      await fs.appendFile(page.path, ' Admin Settings - MWS Credentials FAILED \n', function(err) {
+      await fs.appendFile(page.path, ' MWS Credentials FAILED \n', function(err) {
           console.log('\t   ' + error );
         })
       console.log(error)

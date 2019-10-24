@@ -94,11 +94,11 @@ describe('Amzentrix tests for Store Settings Asins', async function ()
 			}
 			// --------------------------------------------------------------------------
 			
-			await fs.appendFile( page.path, ' Store Settings Asins SUCCESSFUL \n', function(err) {}) 			
+			await fs.appendFile( page.path, 'Asins SUCCESSFUL \n', function(err) {}) 			
 		}
 		catch(error)
 		{
-			await fs.appendFile( page.path, ' Store Settings Asins FAILED \n', function(err) 
+			await fs.appendFile( page.path, 'Asins FAILED \n', function(err) 
 			{
                 console.log('\t   ' + error );
             })  

@@ -9,7 +9,7 @@ var td = '/Note Categories.csv';
 var ts = '/Note Categories.txt';
 
 //mwscredentials
- describe('Amzentrix tests for Admin Settings - Note Categories', async function () {
+ describe('Amzentrix tests for Note Categories', async function () {
     beforeEach (async () =>  {
         page = new Page();
         expect = new Expect();
@@ -131,12 +131,12 @@ var ts = '/Note Categories.txt';
         } 
 
 
-          await fs.appendFile(page.path , ' Admin Settings - Note Categories SUCCESSFUL \n', function(err) {
+          await fs.appendFile(page.path , 'Note Categories SUCCESSFUL \n', function(err) {
        
        })
 
 } catch (error) {
-      await fs.appendFile(page.path , ' Admin Settings - Note Categories FAILED \n', function(err) {
+      await fs.appendFile(page.path , 'Note Categories FAILED \n', function(err) {
           console.log('\t   ' + error );
         })
       //console.log(error)

@@ -8,7 +8,7 @@ var ks = require('node-key-sender');
 var td = '/Roles.csv';
 var ts = '/Roles.txt';
 
-describe('Amzentrix tests for Admin Settings - Roles', async function () {
+describe('Amzentrix tests for Roles', async function () {
 	beforeEach(async () => 
 	{                                                         // mgrurun kada foreachs
 		page = new Page();
@@ -144,11 +144,11 @@ describe('Amzentrix tests for Admin Settings - Roles', async function () {
 			}
 			// --------------------------------------------------------------------------
 
-			await fs.appendFile(page.path , ' Admin Settings - Roles SUCCESSFUL \n', function(err) {}) 			
+			await fs.appendFile(page.path , 'Roles SUCCESSFUL \n', function(err) {}) 			
 		}
 		catch(error)
 		{
-			await fs.appendFile(page.path , ' Admin Settings - Roles FAILED \n', function(err) {
+			await fs.appendFile(page.path , 'Roles FAILED \n', function(err) {
                 console.log('\t   ' + error );
             })  
 		}	

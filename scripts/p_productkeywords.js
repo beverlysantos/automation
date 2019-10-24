@@ -5,8 +5,8 @@ const Page = require('../lib/webdrivers'),
       mkdirp = require('mkdirp');
 	  var ks = require('node-key-sender');
 	  
-var td = '/TC_Product_Keywords.csv';
-var ts = '/TS_Product_Keywords.txt';
+var td = '/Product_Keywords.csv';
+var ts = '/Product_Keywords.txt';
 var td_id = 'TD_060';
 
 describe('Amzentrix tests for Store Settings > Product Keywords', async function ()
@@ -187,11 +187,11 @@ describe('Amzentrix tests for Store Settings > Product Keywords', async function
 			}
 			// --------------------------------------------------------------------------
 			
-			await fs.appendFile( page.path, ' Store Settings Producet Keywords - Add, Edit and Delete SUCCESSFUL \n', function(err) {}) 			
+			await fs.appendFile( page.path, 'Producet Keywords SUCCESSFUL \n', function(err) {}) 			
 		}
 		catch(error)
 		{
-			await fs.appendFile( page.path, ' Store Settings Producet Keywords - Add, Edit and Delete FAILED \n', function(err) 
+			await fs.appendFile( page.path, 'Producet Keywords FAILED \n', function(err) 
 			{
                 console.log('\t   ' + error );
             })  
