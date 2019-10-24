@@ -1,9 +1,4 @@
-@echo off
-set projectLocation=C:\Jenkins\jobs\automation\workspace\tcm bat
-cd %projectLocation%
 
-if not exist "C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\Log" mkdir C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\Log;
-if not exist "C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\Excel" mkdir C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\Excel;
 set projectLocation=C:\Jenkins\jobs\automation\workspace\
 cd %projectLocation%
 
