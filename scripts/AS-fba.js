@@ -116,11 +116,11 @@ describe('Amzentrix tests for FBA Fields', async function () {
 				console.log(error);
 				failed(3,td);
 			}
-			await fs.appendFile(page.path, 'Admin Settings - FBA Fields SUCCESSFUL\n', function(err) {
+			await fs.appendFile(page.path, 'FBA Fields SUCCESSFUL\n', function(err) {
 
 			})
 			}catch (error){
-			await fs.appendFile(page.path, 'Admin Settings - FBA Fields FAILED\n', function(err) {
+			await fs.appendFile(page.path, 'FBA Fields FAILED\n', function(err) {
 				console.log('\t'+error);
 			})
 			console.log(error)

@@ -9,7 +9,7 @@ var td = '/Fulfillment Center.csv';
 var ts = '/Fulfillment Center.txt';
 
   //fulfillmentcenter
-    describe('Amzentrix tests for Admin Settings - Fulfillment Center', async function () {
+    describe('Amzentrix tests for Fulfillment Center', async function () {
     beforeEach (async () =>  {
         page = new Page();
         expect = new Expect();
@@ -162,7 +162,7 @@ var ts = '/Fulfillment Center.txt';
               console.log('\t   ' + error );
               failed_a(3,td);
         } 
-         await fs.appendFile(page.path, ' Admin Settings - Fulfillment Center SUCCESSFUL \n', function(err) {
+         await fs.appendFile(page.path, 'Fulfillment Center SUCCESSFUL \n', function(err) {
   
        })
 
@@ -171,7 +171,7 @@ var ts = '/Fulfillment Center.txt';
       //}
     //}
     } catch (error) {
-      await fs.appendFile(page.path, ' Admin Settings - Fulfillment Center FAILED  \n', function(err) {
+      await fs.appendFile(page.path, 'Fulfillment Center FAILED  \n', function(err) {
           console.log('\t   ' + error );
         })
       //console.log(error)

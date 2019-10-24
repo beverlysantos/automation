@@ -1,13 +1,13 @@
 const Page = require('../lib/webdrivers'),
-      Expect = require('../lib/chai-expect'),
-      fs  = require("fs"),
+	  Expect = require('../lib/chai-expect'),
+	  fs  = require("fs"),
       time = require('node-get-time');
       mkdirp = require('mkdirp');
-var ks = require('node-key-sender');
-
-var td = '/Product Keywords.csv';
-var ts = '/Product Keywords.txt';
-
+	  var ks = require('node-key-sender');
+	  
+var td = '/Product_Keywords.csv';
+var ts = '/Product_Keywords.txt';
+var td_id = 'TD_060';
 
 describe('Amzentrix tests for Store Settings > Product Keywords', async function ()
 {
@@ -36,12 +36,18 @@ describe('Amzentrix tests for Store Settings > Product Keywords', async function
 		await page.Log(ts,' [Successful] Validation in Header title  \n');	
 		
 		await page.Log(ts,' Click Challenger USA \n');	
-		await page.clickId('store_1');
+		await page.Store('Challenger USA');	
 		
-		await page.clickId("fvpp-blackout");
+		await page.getClassText("page-header").then(function(text)   {
+            return expect.toEqual(text, "DASHBOARD CHALLENGER USA"); 
+        });
 		
 		await page.Log(ts,' Click Settings \n');	
-		await page.clickLink('Settings');
+		await page.Store_SideBar('Settings');
+		
+		await page.getClassText("page-header").then(function(text)   {
+            return expect.toHaveString(text, "SETTINGS");
+        });
 		
 		await page.Log(ts,' Click View icon in Producet Keywords \n');	
 		await page.Store_Settings('Product Keywords BIM');
@@ -55,23 +61,25 @@ describe('Amzentrix tests for Store Settings > Product Keywords', async function
 			{ 	
 		    	await page.getClassText("page-header").then(function(text)
 				{
-		    		return expect.toHaveString(text, "PRODUCT");
+		    		return expect.toHaveString(text, "PRODUCT KEYWORDS");
 				});
     			await page.Log(ts,' [SUCCESSFUL] Validation for Page Header \n');
-
 				passed_p(3,td);
-			} catch (error) {
-				console.log(error);
+			} 
+			catch(error)
+			{
+				console.log('\t   ' + error );
 				failed_p(3,td);
-			}			
+			}
+			
 			// ADD -------------------------------------------------------------------
 			try
 			{ 			
 				await page.Log(ts,' Click Add button \n');
-				await page.clickXpath("//*[@id='main-content']//div[1]//div/div/a[2]");
+				await page.clickCss('#main-content > section > div:nth-child(1) > div > h3 > div > div > a.btn.btn-info');
 				
-				await page.Log(ts," Input 'testz' in Name field \n");
-				await page.writeById('name', 'testz');
+				await page.Log(ts," Input " + String(await page.getTD(td_id,3)) + " in Name field \n");
+				await page.writeById('name', page.getTD(td_id,3));
 				
 				await page.Log(ts,' Click Submit button \n');
 				await page.clickClassName('btn btn-info addbtn');		
@@ -80,22 +88,23 @@ describe('Amzentrix tests for Store Settings > Product Keywords', async function
 				await ks.sendKey("enter");
 				
 				await page.Log(ts,' Click Search dropdown \n');
-				await page.clickXpath("//*[@id='main-content']//div[1]//div/div/a[1]");				
+				await page.clickCss('#main-content > section > div:nth-child(1) > div > h3 > div > div > a.btn.btn-primary');
 				
-				await page.Log(ts," Input 'testz' in Search field \n");
-				await page.writeById('name', 'testz');
+				await page.Log(ts," Input " + String(await page.getTD(td_id,3)) + " in Search field \n");
+				await page.writeById('name', page.getTD(td_id,3));
 				
 				await page.Log(ts,' Click Search button \n');
 				await page.clickClassName('btn btn-primary searchbtn');				
 				
 				await page.Log(ts," [Add Successful] data found \n");	
-				await page.getCssText('#main-content > section > div:nth-child(5) tr > td:nth-child(2)').then(function(text)
-				{				
-					return expect.toHaveString(text, 'testz')
-				});	
+				const val1 = await page.getCssText('#main-content > section > div:nth-child(5) tr > td:nth-child(2)');
+				expect.toHaveString(val1, String(await page.getTD(td_id,3)));
+				
 				passed_p(2,td);
-			} catch (error) {
-				console.log(error);
+			} 
+			catch(error)
+			{
+				console.log('\t   ' + error );
 				failed_p(2,td);
 			}
 			// --------------------------------------------------------------------------
@@ -109,8 +118,8 @@ describe('Amzentrix tests for Store Settings > Product Keywords', async function
 				await page.Log(ts,' Clear Name field \n');
 				await page.clearId("name");
 				
-				await page.Log(ts," Input 'testa' in Name field \n");
-				await page.writeById('name', 'testa');
+				await page.Log(ts," Input " + String(await page.getTD(td_id,4)) + " in Name field \n");
+				await page.writeById('name', page.getTD(td_id,4));
 				
 				await page.Log(ts,' Click Update button \n');
 				await page.clickClassName('btn btn-primary editbtn');		
@@ -119,23 +128,23 @@ describe('Amzentrix tests for Store Settings > Product Keywords', async function
 				await ks.sendKey("enter");
 				
 				await page.Log(ts,' Click Search dropdown \n');
-				await page.clickXpath("//*[@id='main-content']//div[1]//div/div/a[1]");				
+				await page.clickCss('#main-content > section > div:nth-child(1) > div > h3 > div > div > a.btn.btn-primary');
 				
-				await page.Log(ts," Input 'testa' in Search field \n");
-				await page.writeById('name', 'testa');
+				await page.Log(ts," Input " + String(await page.getTD(td_id,4)) + " in Search field \n");
+				await page.writeById('name', page.getTD(td_id,4));
 				
 				await page.Log(ts,' Click Search button \n');
 				await page.clickClassName('btn btn-primary searchbtn');		
 				
 				await page.Log(ts," [Update Successful] data found \n");	
-				await page.getCssText('#main-content > section > div:nth-child(5) tr > td:nth-child(2)').then(function(text)
-				{				
-					return expect.toHaveString(text, 'testa')
-				});
+				const val1 = await page.getCssText('#main-content > section > div:nth-child(5) tr > td:nth-child(2)');
+				expect.toHaveString(val1, String(await page.getTD(td_id,4)));
 				
 				passed_p(1,td);
-			} catch (error) {
-				console.log(error);
+			} 
+			catch(error)
+			{
+				console.log('\t   ' + error );
 				failed_p(1,td);
 			}
 			// --------------------------------------------------------------------------
@@ -143,10 +152,9 @@ describe('Amzentrix tests for Store Settings > Product Keywords', async function
 			// Delete -------------------------------------------------------------------
 			try
 			{
-				await page.Log(ts, " [For Deletion] data found \n");	
-				await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)").then(function(text){
-					return expect.toHaveString(text,"testa")
-				});
+				await page.Log(ts, " [For Deletion] data found \n");
+				const val1 = await page.getCssText('tbody tr:nth-last-child(1) td:nth-child(2)');
+				expect.toHaveString(val1, String(await page.getTD(td_id,4)));
 				
 				await page.Log(ts,' Click Delete icon \n');
 				await page.clickCss("table tbody  tr:nth-last-child(1) a:nth-child(2)"); 
@@ -157,19 +165,33 @@ describe('Amzentrix tests for Store Settings > Product Keywords', async function
 				await page.Log(ts,' Click OK \n');
 				await ks.sendKey("enter");
 				
-				await page.Log(ts, " [Delete Successful] \n");
+				await page.Log(ts,' Click Search dropdown \n');
+				await page.clickCss('#main-content > section > div:nth-child(1) > div > h3 > div > div > a.btn.btn-primary');
+				
+				await page.Log(ts," Input " + String(await page.getTD(td_id,4)) + " in Search field \n");
+				await page.writeById('name', page.getTD(td_id,4));
+				
+				await page.Log(ts,' Click Search button \n');
+				await page.clickClassName('btn btn-primary searchbtn');	
+				
+				const val2 = await page.getCssText('section > div:nth-child(5) td');
+				expect.toHaveString(val2, 'No results returned for this inquiry');				
+				await page.Log(ts, " [Delete Successful] No results returned for this inquiry \n");
+				
 				passed_p(0,td);
-			} catch (error) {
-				console.log(error);
+			} 
+			catch(error)
+			{
+				console.log('\t   ' + error );
 				failed_p(0,td);
 			}
 			// --------------------------------------------------------------------------
 			
-			await fs.appendFile(page.path , ' Store Settings Producet Keywords SUCCESSFUL \n', function(err) {}) 			
+			await fs.appendFile( page.path, 'Producet Keywords SUCCESSFUL \n', function(err) {}) 			
 		}
 		catch(error)
 		{
-			await fs.appendFile(page.path , ' Store Settings Producet Keywords FAILED \n', function(err) 
+			await fs.appendFile( page.path, 'Producet Keywords FAILED \n', function(err) 
 			{
                 console.log('\t   ' + error );
             })  

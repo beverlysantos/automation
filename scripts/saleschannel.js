@@ -5,10 +5,10 @@ time = require('node-get-time');
 mkdirp = require('mkdirp');
 var ks = require('node-key-sender');
 	  
-var td = '/TC_Sales Channel.csv';
-var ts = '/TS_Sales_Channel.txt';
+var td = '/Sales Channel.csv';
+var ts = '/Sales_Channel.txt';
 
-describe('Amzentrix tests for Admin Settings > Sales Channel', async function () {
+describe('Amzentrix tests for Sales Channel', async function () {
 beforeEach(async () => 
 {
 	page = new Page();
@@ -170,11 +170,11 @@ beforeEach(async () =>
 			}
 			// --------------------------------------------------------------------------
 
-			await fs.appendFile( page.path, ' Admin Settings Sales Channel - Add, Edit and Delete SUCCESSFUL \n', function(err) {}) 			
+			await fs.appendFile( page.path, 'Sales Channel SUCCESSFUL \n', function(err) {}) 			
 		}
 		catch(error)
 		{
-			await fs.appendFile( page.path, ' Admin Settings Sales Channel - Add, Edit and Delete FAILED \n', function(err) {
+			await fs.appendFile( page.path, 'Sales Channel FAILED \n', function(err) {
                 console.log('\t   ' + error );
             })  
 		}	

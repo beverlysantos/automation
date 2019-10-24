@@ -116,11 +116,11 @@ describe('Amzentrix tests for Business Report Fields (per Date)', async function
 				failed(3,td);
 			}
 				
-			await fs.appendFile(page.path, 'Admin Settings - Business Report Fields (per Date) SUCCESSFUL\n', function(err) {
+			await fs.appendFile(page.path, 'Business Report Fields (per Date) SUCCESSFUL\n', function(err) {
 
 			})
 		}catch (error){
-			await fs.appendFile(page.path, 'Admin Settings - Business Report Fields (per Date) FAILED\n', function(err) {
+			await fs.appendFile(page.path, 'Business Report Fields (per Date) FAILED\n', function(err) {
 				console.log('\t'+error);
 			})
 			console.log(error)

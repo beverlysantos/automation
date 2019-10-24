@@ -8,7 +8,7 @@ var ks = require('node-key-sender');
 var td = '/Shipping Countries.csv';
 var ts = '/Shipping Countries.txt';
 
-describe('Amzentrix tests for Admin Settings > Shipping Countries', async function () {
+describe('Amzentrix tests for Shipping Countries', async function () {
 	beforeEach(async () => 
 	{                                                         // mgrurun kada foreachs
 		page = new Page();
