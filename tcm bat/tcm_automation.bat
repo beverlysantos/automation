@@ -1,3 +1,4 @@
+
 @echo off
 set projectLocation=C:\Jenkins\jobs\automation\workspace\tcm bat
 cd %projectLocation%
