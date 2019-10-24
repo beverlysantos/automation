@@ -1,12 +1,13 @@
 const Page = require('../lib/webdrivers'),
-      Expect = require('../lib/chai-expect'),
-      fs  = require("fs"),
+	  Expect = require('../lib/chai-expect'),
+	  fs  = require("fs"),
       time = require('node-get-time');
       mkdirp = require('mkdirp');
-var ks = require('node-key-sender');
-
-var td = '/Uploaded Files (Business Reports).csv';
-var ts = '/Uploaded Files (Business Reports).txt';
+	  var ks = require('node-key-sender');
+	  
+var td = '/TC_Uploaded Files (Business Reports).csv';
+var ts = '/TS_Uploaded_Files_BR.txt';
+var td_id = 'TD_064';
 
 describe('Amzentrix tests for Store Settings > Uploaded Files (Business Reports)', async function ()
 {
@@ -14,9 +15,8 @@ describe('Amzentrix tests for Store Settings > Uploaded Files (Business Reports)
 	{
 		page = new Page();
         expect = new Expect();
-
 		await page.CreateLog(ts,'Uploaded Files (Business Reports) \n');
-		await page.Log(ts,' Navigate to http://www.amzentrix.uat40/login \n');
+		await page.Log(ts,' Navigate to http://www.amzentrix.uat40/login/login \n');
 		await page.visit("http://www.amzentrix.uat40/login");
 		
 		await page.Log(ts,' Input Email Address field: jbeverly_qa@amzentrix.com \n');
@@ -35,14 +35,18 @@ describe('Amzentrix tests for Store Settings > Uploaded Files (Business Reports)
 		await page.Log(ts,' [SUCCESSFUL] Validation in Header title  \n');	
 		
 		await page.Log(ts,' Click Challenger USA \n');	
-		await page.clickId('store_1');
+		await page.Store('Challenger USA');
 		
-		await page.clickId("fvpp-blackout");
+		await page.getClassText("page-header").then(function(text)   {
+            return expect.toEqual(text, "DASHBOARD CHALLENGER USA"); 
+        });
 		
 		await page.Log(ts,' Click Settings \n');	
-		await page.clickLink('Settings');
+		await page.Store_SideBar('Settings');
 		
-		await ks.sendKeys(['down','down','down']);
+		await page.getClassText("page-header").then(function(text)   {
+            return expect.toHaveString(text, "SETTINGS");
+        });
 		
 		await page.Log(ts,' Click View icon in Uploaded Files (Business Reports) \n');	
 		await page.Store_Settings('Uploaded Files (Business Reports) BIM');
@@ -59,10 +63,11 @@ describe('Amzentrix tests for Store Settings > Uploaded Files (Business Reports)
 		    		return expect.toHaveString(text, "UPLOADED FILES (BUSINESS REPORTS)");
 				});
     			await page.Log(ts,' [SUCCESSFUL] Validation for Page Header \n');
-
 				passed_p(3,td);
-			} catch (error) {
-				console.log(error);
+			} 
+			catch(error)
+			{
+				console.log('\t   ' + error );
 				failed_p(3,td);
 			}			
 			// Search -------------------------------------------------------------------
@@ -71,36 +76,30 @@ describe('Amzentrix tests for Store Settings > Uploaded Files (Business Reports)
 				await page.Log(ts,' Click Search button \n');
 				await page.clickClassName('btn btn-primary');			
 				
-				// await page.Log(ts," Input '09/15/2019' in Date From field \n");
-				// await page.writeByXpath('//*[@id="date_from"]', '09/15/2019');
-				
-				// await page.Log(ts," Input '09/15/2019' in Date To field \n");
-				// await ks.sendKey('tab');
-				// await page.writeByXpath('//*[@id="date_to"]', '09/15/2019');
-				
-				await page.Log(ts," Input 'BusinessReport-09-15-2019 Challenger US.csv' in Filename field \n");
-				await page.writeByXpath('//*[@id="filename"]', 'BusinessReport-09-15-2019 Challenger US.csv');
+				await page.Log(ts," Input " + String(await page.getTD(td_id,3)) + " in Filename field \n");
+				await page.writeByXpath('//*[@id="filename"]', page.getTD(td_id,3));			
 
 				await page.Log(ts,' Click Search button \n');
 				await page.clickClassName('btn btn-lg btn-primary searchbtn');						
 				
-				await page.Log(ts," [SUCCESSFUL] Validation in Filename \n");	
-				await page.getCssText('#main-content div:nth-child(5) td:nth-child(2)').then(function(text)
-				{				
-					return expect.toHaveString(text, 'BusinessReport-09-15-2019 Challenger US.csv')
-				});	
+				await page.Log(ts," [SUCCESSFUL] Validation in Filename \n");
+								
+				const val1 = await page.getCssText('#main-content div:nth-child(5) td:nth-child(2)');
+				expect.toHaveString(val1, String(await page.getTD(td_id,3)));
+				
 				passed_p(4,td);
-			} catch (error) {
-				console.log(error);
+			} 
+			catch(error)
+			{
+				console.log('\t   ' + error );
 				failed_p(4,td);
 			}
 			// --------------------------------------------------------------------------
-			
-			await fs.appendFile( page.path, 'Uploaded Files (Business Reports) SUCCESSFUL \n', function(err) {}) 			
+			await fs.appendFile( page.path, ' Store Settings Uploaded Files (Business Reports) - Search SUCCESSFUL \n', function(err) {}) 			
 		}
 		catch(error)
 		{
-			await fs.appendFile( page.path, 'Uploaded Files (Business Reports) FAILED \n', function(err) 
+			await fs.appendFile( page.path, ' Store Settings Uploaded Files (Business Reports) - Search failed_p \n', function(err) 
 			{
                 console.log('\t   ' + error );
             })  
