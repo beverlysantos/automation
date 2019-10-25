@@ -1,16 +1,17 @@
 const Page = require('../lib/webdrivers'),
-      Expect = require('../lib/chai-expect'),
-      fs  = require("fs"),
+	  Expect = require('../lib/chai-expect'),
+	  fs  = require("fs"),
       time = require('node-get-time');
       mkdirp = require('mkdirp');
-var ks = require('node-key-sender');
+	  var ks = require('node-key-sender');
+	  
+var td = '/TC_Statuses(Fulfillments).csv';
+var ts = '/TS_Statuses(Fulfillments).txt';
+var td_id = 'TD_018';
 
-var td = '/Statuses(Fulfillments).csv';
-var ts = '/Statuses(Fulfillments).txt';
-
-describe('Amzentrix tests for Statuses(Fulfillments)', async function () {
+describe('Amzentrix tests for Admin Settings > Statuses (Fulfillments)', async function () {
 	beforeEach(async () => 
-	{                                                         // mgrurun kada foreachs
+	{
 		page = new Page();
         expect = new Expect();
 
@@ -32,19 +33,15 @@ describe('Amzentrix tests for Statuses(Fulfillments)', async function () {
 			return expect.toHaveString(text, "Dashboard")
 		});
 		
-		await page.Log(ts,' Click Navigation dropdown \n');
-		await page.clickId("navbarTopDropdownMenuItems");
+		await page.Log(ts,' Select Settings in dropdown menu \n');
+		await page.Home_DropdownMenu('Settings');
 		
-		await page.Log(ts,' Select Settings \n');
-		await page.clickXpath("//*[@id='navbarTogglerDemo03']//a[5]");
-		
-		await page.clickId("fvpp-close");
-		
-		await page.Log(ts,' Scroll down to Statuses (Fulfillments)  \n');	
-		await ks.sendKeys(['down','down','down','down','down','down','down','down','down','down','down']);
+		await page.getClassText("page-header").then(function(text)   {
+            return expect.toHaveString(text, "SETTINGS");
+        });
 		
 		await page.Log(ts,' Click View icon in Statuses (Fulfillments) \n');	
-		await page.clickId("statuses");
+		await page.AdminSettings("Statuses (Fulfillments)");
 	});		
 	it('Should perform Add, Edit and Delete', async () =>
 	{
@@ -56,20 +53,22 @@ describe('Amzentrix tests for Statuses(Fulfillments)', async function () {
 		    		return expect.toHaveString(text, "STATUSES (FULFILLMENTS)");
 				});;	
     			await page.Log(ts,' [SUCCESSFUL] Validation for Page Header \n');
-
 				passed_p(3,td);
-			} catch (error) {
-				console.log(error);
+			} 
+			catch(error)
+			{
+				console.log('\t   ' + error );
 				failed_p(3,td);
 			}
+			
 			// ADD -------------------------------------------------------------------
 			try
 			{
 				await page.Log(ts,' Click Add button \n');
 				await page.Addbtn_Click();
 				
-				await page.Log(ts," Input 'Test15' in Name field \n");
-				await page.writeById("name", "Test15");
+				await page.Log(ts," Input " + String(await page.getTD(td_id,3)) + " in Name field \n");
+				await page.writeById("name", page.getTD(td_id,3));
 				
 				await page.Log(ts,' Click Add button \n');
 				await page.clickClassName("btn btn-info addbtn");	
@@ -77,20 +76,22 @@ describe('Amzentrix tests for Statuses(Fulfillments)', async function () {
 				await page.Log(ts,' Click OK \n');
 				await ks.sendKey("enter");
 				
-				await page.Log(ts," Input 'Test15' in Search field \n");
-				await page.writeById("search", "Test15");
+				await page.Log(ts," Input " + String(await page.getTD(td_id,3)) + " in Search field \n");
+				await page.writeById("search", page.getTD(td_id,3));
 				
 				await page.Log(ts,' Click Search button \n');
 				await page.clickClassName("btn btn-success");
 				
-				await page.Log(ts," [Add Successful] data found in page 6 row 4 \n");	
-				await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)").then(function(text)
-				{
-					return expect.toHaveString(text,"Test15")
-				});			
+				await page.Log(ts," [Add Successful] \n");	
+				
+				const val1 = await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)");
+				expect.toHaveString(val1, String(await page.getTD(td_id,3)));
+		
 				passed_p(2,td);
-			} catch (error) {
-				console.log(error);
+			} 
+			catch(error)
+			{
+				console.log('\t   ' + error );
 				failed_p(2,td);
 			}
 			// EDIT -------------------------------------------------------------------
@@ -102,8 +103,8 @@ describe('Amzentrix tests for Statuses(Fulfillments)', async function () {
 				await page.Log(ts,' Clear Name field \n');
 				await page.clearId("name");
 				
-				await page.Log(ts," Input 'Test16' in Name field \n");
-				await page.writeById("name", "Test16");
+				await page.Log(ts," Input " + String(await page.getTD(td_id,4)) + " in Name field \n");
+				await page.writeById("name", page.getTD(td_id,4));
 				
 				await page.Log(ts,' Click Update button \n');
 				await page.clickClassName("btn btn-success editbtn");
@@ -111,19 +112,22 @@ describe('Amzentrix tests for Statuses(Fulfillments)', async function () {
 				await page.Log(ts,' Click OK \n');
 				await ks.sendKey("enter");
 				
-				await page.Log(ts," Input 'Test16' in Search field \n");
-				await page.writeById("search", "Test16");
+				await page.Log(ts," Input " + String(await page.getTD(td_id,4)) + " in Search field \n");
+				await page.writeById("search", page.getTD(td_id,4));
 				
 				await page.Log(ts,' Click Search button \n');
 				await page.clickClassName("btn btn-success");
 				
-				await page.Log(ts, " [Edit Successful] data found in in page 6 row 4 \n");	
-				await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)").then(function(text){
-					return expect.toHaveString(text,"Test16")
-				});
+				await page.Log(ts," [Edit Successful] \n");	
+				
+				const val1 = await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)");
+				expect.toHaveString(val1, String(await page.getTD(td_id,4)));
+
 				passed_p(1,td);
-			} catch (error) {
-				console.log(error);
+			} 
+			catch(error)
+			{
+				console.log('\t   ' + error );
 				failed_p(1,td);
 			}
 			// --------------------------------------------------------------------------
@@ -131,10 +135,9 @@ describe('Amzentrix tests for Statuses(Fulfillments)', async function () {
 			// Delete -------------------------------------------------------------------
 			try
 			{
-				await page.Log(ts, " [For Deletion] data found in page 6 row 4 \n");	
-				await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)").then(function(text){
-					return expect.toHaveString(text,"Test16")
-				});
+				await page.Log(ts, " [For Deletion] \n");
+				const val1 = await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)");
+				expect.toHaveString(val1, String(await page.getTD(td_id,4)));
 				
 				await page.Log(ts,' Click Delete icon \n');
 				await page.clickCss("table tbody  tr:nth-last-child(1) a:nth-child(2)"); 
@@ -145,19 +148,31 @@ describe('Amzentrix tests for Statuses(Fulfillments)', async function () {
 				await page.Log(ts,' Click OK \n');
 				await ks.sendKey("enter");
 				
-				await page.Log(ts, " [Delete Successful] \n");
+				await page.Log(ts," Input " + String(await page.getTD(td_id,4)) + " in Search field \n");
+				await page.writeById("search", page.getTD(td_id,4));
+				
+				await page.Log(ts,' Click Search button \n');
+				await page.clickClassName("btn btn-success");
+				
+				await page.Log(ts, " [Delete Successful] No data yet. \n");
+				
+				const val2 = await page.getCssText("#main-content div:nth-child(4) td");
+				expect.toHaveString(val2, "No data yet.");
+
 				passed_p(0,td);
-			} catch (error) {
-				console.log(error);
+			} 
+			catch(error)
+			{
+				console.log('\t   ' + error );
 				failed_p(0,td);
 			}
 			// --------------------------------------------------------------------------
 
-			await fs.appendFile(page.path , 'Statuses (Fulfillments) SUCCESSFUL \n', function(err) {}) 			
+			await fs.appendFile( page.path, ' Admin Settings Statuses (Fulfillments) - Add, Edit and Delete SUCCESSFUL \n', function(err) {}) 			
 		}
 		catch(error)
 		{
-			await fs.appendFile(page.path , 'Statuses (Fulfillments) FAILED \n', function(err) {
+			await fs.appendFile( page.path, ' Admin Settings Statuses (Fulfillments) - Add, Edit and Delete FAILED \n', function(err) {
                 console.log('\t   ' + error );
             })  
 		}	
