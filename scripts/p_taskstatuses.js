@@ -5,10 +5,11 @@ const Page = require('../lib/webdrivers'),
       mkdirp = require('mkdirp');
 	  var ks = require('node-key-sender');
 	  
-var td = '/Task Statuses.csv';
-var ts = '/Task_Statuses.txt';
+var td = '/TC_Task Statuses.csv';
+var ts = '/TS_Task_Statuses.txt';
+var td_id = 'TD_021';
 
-describe('Amzentrix tests for Task Statuses', async function () {
+describe('Amzentrix tests for Admin Settings > Task Statuses', async function () {
 	beforeEach(async () => 
 	{
 		page = new Page();
@@ -67,8 +68,8 @@ describe('Amzentrix tests for Task Statuses', async function () {
 				await page.Log(ts,' Click Add button \n');
 				await page.clickXpath("//*[@id='main-content']//div[1]//h3//a");
 				
-				await page.Log(ts," Input 'Test1' in Name field \n");
-				await page.writeById("name", "Test1");
+				await page.Log(ts," Input " + String(await page.getTD(td_id,3)) + " in Name field \n");
+				await page.writeById("name", page.getTD(td_id,3));
 				
 				await page.Log(ts,' Click Add button \n');
 				await page.clickClassName("btn btn-info addbtn");
@@ -77,11 +78,11 @@ describe('Amzentrix tests for Task Statuses', async function () {
 				await ks.sendKey("enter");
 				
 				await page.Log(ts," [Add Successful] \n");	
-				await page.validateRow(ts,'#main-content tr td:nth-child(2)','Test1');
-				await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)").then(function(text)
-				{				
-					return expect.toHaveString(text,"Test1")
-				});	
+				await page.validateRow(ts,'#main-content tr td:nth-child(2)', String(await page.getTD(td_id,3)));
+				
+				const val1 = await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)");
+				expect.toHaveString(val1, String(await page.getTD(td_id,3)));
+
 				passed_p(2,td);
 			} 
 			catch(error)
@@ -100,8 +101,8 @@ describe('Amzentrix tests for Task Statuses', async function () {
 				await page.Log(ts,' Clear Name field \n');
 				await page.clearId("name");
 				
-				await page.Log(ts," Input 'Test2' in Name field \n");
-				await page.writeById("name", "Test2");
+				await page.Log(ts," Input " + String(await page.getTD(td_id,4)) + " in Name field \n");
+				await page.writeById("name", page.getTD(td_id,4));
 				
 				await page.Log(ts,' Click Update button \n');
 				await page.clickClassName("btn btn-success editbtn");
@@ -109,12 +110,12 @@ describe('Amzentrix tests for Task Statuses', async function () {
 				await page.Log(ts,' Click OK \n');
 				await ks.sendKey("enter");			
 				
-				await page.Log(ts," [Edit Successful] \n");	
-				await page.validateRow(ts,'#main-content tr td:nth-child(2)','Test2');
-				await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)").then(function(text)
-				{			
-					return expect.toHaveString(text,"Test2")
-				});
+				await page.Log(ts," [Edit Successful] \n");
+				
+				await page.validateRow(ts,'#main-content tr td:nth-child(2)', String(await page.getTD(td_id,4)));
+				const val1 = await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)");
+				expect.toHaveString(val1, String(await page.getTD(td_id,4)));
+
 				passed_p(1,td);
 			} 
 			catch(error)
@@ -128,10 +129,8 @@ describe('Amzentrix tests for Task Statuses', async function () {
 			try
 			{ 
 				await page.Log(ts, " [For Deletion] data found in row 5 \n");
-				await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)").then(function(text)
-				{				
-					return expect.toHaveString(text,"Test2")
-				});						
+				const val1 = await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)");
+				expect.toHaveString(val1, String(await page.getTD(td_id,4)));				
 				
 				await page.Log(ts,' Click Delete icon \n');
 				await page.clickCss("table tbody  tr:nth-last-child(1) a:nth-child(2)"); 
@@ -143,7 +142,8 @@ describe('Amzentrix tests for Task Statuses', async function () {
 				await ks.sendKey("enter");
 				
 				await page.Log(ts,' [Delete Successful] \n');
-				await page.validateDeletedRow(ts,'#main-content tr td:nth-child(2)','Test2');				
+				await page.validateDeletedRow(ts,'#main-content tr td:nth-child(2)', String(await page.getTD(td_id,4)));
+				
 				passed_p(0,td);
 			} 
 			catch(error)
@@ -153,11 +153,11 @@ describe('Amzentrix tests for Task Statuses', async function () {
 			}
 			// --------------------------------------------------------------------------
 
-			await fs.appendFile( page.path, 'Task Statuses SUCCESSFUL \n', function(err) {}) 			
+			await fs.appendFile( page.path, ' Admin Settings Task Statuses - Add, Edit and Delete SUCCESSFUL \n', function(err) {}) 			
 		}
 		catch(error)
 		{
-			await fs.appendFile( page.path, 'Task Statuses FAILED \n', function(err) {
+			await fs.appendFile( page.path, ' Admin Settings Task Statuses - Add, Edit and Delete FAILED \n', function(err) {
                 console.log('\t   ' + error );
             })  
 		}	
