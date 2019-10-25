@@ -128,7 +128,7 @@ describe('Amzentrix tests for Admin Settings > Task Statuses', async function ()
 			// DELETE -------------------------------------------------------------------
 			try
 			{ 
-				await page.Log(ts, " [For Deletion] data found in row 5 \n");
+				await page.Log(ts, " [For Deletion] \n");
 				const val1 = await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)");
 				expect.toHaveString(val1, String(await page.getTD(td_id,4)));				
 				
