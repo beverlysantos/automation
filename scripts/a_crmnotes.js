@@ -286,8 +286,4 @@ describe('Amzentrix tests for CRM Notes', async function () {
       }
       page.quit();
    });
-<<<<<<< HEAD
-}); //ARIAN
-=======
 });
->>>>>>> 861cfdfb9852663848cd086244138162b18df4da

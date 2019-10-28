@@ -1,4 +1,3 @@
-
 @echo off
 set projectLocation=C:\Jenkins\jobs\automation\workspace\tcm bat
 cd %projectLocation%
@@ -43,8 +42,6 @@ if %mo%==01 (
 if not exist "C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\Log" mkdir C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\Log;
 if not exist "C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\Excel" mkdir C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\Excel;
 
-
-
 ::echo. >> C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
 
 echo     		Test Summary as of %date:~-10,2%/%date:~-7,2%/%date:~-4,4% %time:~0,2%:%time:~3,2%:%time:~6,2%>> C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
@@ -53,13 +50,14 @@ echo. >> C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo
 echo     ADMIN SETTINGS >> C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
 start /wait as_brf 
 start /wait as_brf_date 
+
 start /wait as_cur 
 start /wait as_dd 
 start /wait as_fba 
 start /wait as_fbm 
 start /wait as_fc 
 ::start /wait as_mws 
-start /wait as_n 
+::start /wait as_n 
 start /wait as_notec 
 start /wait as_notes 
 start /wait as_reg 
@@ -118,15 +116,15 @@ start /wait set_upbr
 start /wait set_upf 
 start /wait set_upi 
 
-
-
-
-
 echo 	Test Automation ends at %time:~0,2%:%time:~3,2%:%time:~6,2%>>C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
 echo. >> C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
 echo. >> C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4%\%mo%_%date:~-7,2%_%date:~-4,4%\result_summary-%date:~-10,2%_%date:~-7,2%_%date:~-4,4%.txt
 
-echo.
-echo  test done...
-timeout 5
+if not exist "C:\Test_Reports\%month%_%date:~-4,4%" (
+   mkdir "C:\Test_Reports\%month%_%date:~-4,4%" goto copy
+) else (
+   goto copy
+)
+:copy
+xcopy C:\Jenkins\jobs\automation\workspace\test_logs\%month%_%date:~-4,4% C:\Test_Reports\%month%_%date:~-4,4% /E /Y
 exit
