@@ -1,14 +1,15 @@
 const Page = require('../lib/webdrivers'),
-      Expect = require('../lib/chai-expect'),
-      fs  = require("fs"),
+	  Expect = require('../lib/chai-expect'),
+	  fs  = require("fs"),
       time = require('node-get-time');
       mkdirp = require('mkdirp');
-var ks = require('node-key-sender');
+	  var ks = require('node-key-sender');
+	  
+var td = '/TC_Users.csv';
+var ts = '/TS_Users.txt';
+var td_id = 'TD_022';
 
-var td = '/Users.csv';
-var ts = '/Users.txt';
-
-describe('Amzentrix tests for Users', async function () {
+describe('Amzentrix tests for Admin Settings > Users', async function () {
 	beforeEach(async () => 
 	{
 		page = new Page();
@@ -32,19 +33,15 @@ describe('Amzentrix tests for Users', async function () {
 		});
 		await page.Log(ts,' [Successful] Validation in Header title  \n');	
 		
-		await page.Log(ts,' Click Navigation dropdown \n');
-		await page.clickId("navbarTopDropdownMenuItems");
+		await page.Log(ts,' Select Settings in dropdown menu \n');
+		await page.Home_DropdownMenu('Settings');
 		
-		await page.Log(ts,' Select Settings \n');
-		await page.clickXpath("//*[@id='navbarTogglerDemo03']//a[5]");
-		
-		await page.clickId("fvpp-close");
-		
-		await page.Log(ts,' Scroll down to Users  \n');	
-		await ks.sendKeys(['down','down','down','down','down','down','down','down','down','down','down','down','down','down','down']);
+		await page.getClassText("page-header").then(function(text)   {
+            return expect.toHaveString(text, "SETTINGS");
+        });
 		
 		await page.Log(ts,' Click View icon in Users \n');	
-		await page.clickId("users");
+		await page.AdminSettings("Users");
 	});		
 	it('Should perform Add, Edit and Delete', async () =>
 	{
@@ -56,35 +53,31 @@ describe('Amzentrix tests for Users', async function () {
 		    		return expect.toHaveString(text, "USERS");
 				});;	
     			await page.Log(ts,' [SUCCESSFUL] Validation for Page Header \n');
-
 				passed_p(3,td);
-			} catch (error) {
-				console.log(error);
+			} 
+			catch(error)
+			{
+				console.log('\t   ' + error );
 				failed_p(3,td);
 			}
+			
 			// ADD -------------------------------------------------------------------
 			try
 			{
 				await page.Log(ts,' Click Add button \n');			
 				await page.clickXpath("(//*[@id='main-content']//div[1]//h3//a)[2]");
 				
-				await page.Log(ts," Input 'Test19' in Name field \n");
-				await page.writeById("name", "Test19");
+				await page.Log(ts," Input " + String(await page.getTD(td_id,3)) + " in Name field \n");
+				await page.writeById("name", page.getTD(td_id,3));
 				
-				await page.Log(ts," Input 'test@gmail' in Email Address field \n");
-				await page.writeById("email", "test@gmail.com");
+				await page.Log(ts," Input " + String(await page.getTD(td_id,4)) + " in Email Address field \n");
+				await page.writeById("email", page.getTD(td_id,4));
 				
-				await page.Log(ts,' Click Assigned Role dropdown \n');
-				await page.clickId("role_id");
+				await page.Log(ts," Select " + String(await page.getTD(td_id,5)) + " in Assigned Role dropdown \n");
+				await page.selectDrpdwn('#role_id', String(await page.getTD(td_id,5)));
 				
-				await page.Log(ts,' Select Staff \n');
-				await page.clickXpath("//*[@id='role_id']/option[5]");        // staff
-				
-				await page.Log(ts,' Click Status dropdown \n');
-				await page.clickId("user_status_id"); 
-				
-				await page.Log(ts,' Select Black Listed \n');
-				await page.clickXpath("//*[@id='user_status_id']/option[4]"); // black listed
+				await page.Log(ts," Select " + String(await page.getTD(td_id,6)) + " in Status dropdown \n");
+				await page.selectDrpdwn('#user_status_id', String(await page.getTD(td_id,6)));
 				
 				await page.Log(ts,' Click Add button \n');
 				await page.clickClassName("btn btn-info addbtn");
@@ -92,32 +85,27 @@ describe('Amzentrix tests for Users', async function () {
 				await page.Log(ts,' Click OK \n');			
 				await ks.sendKey("enter");
 				
-				await page.Log(ts," Input 'Test19' in Search Name field \n");
-				await page.writeById("query", "Test19");
+				await page.Log(ts," Input " + String(await page.getTD(td_id,3)) + " in Search Name field \n");
+				await page.writeById("query", page.getTD(td_id,3));
 				
-				await page.Log(ts,' Click Assigned Role dropdown \n');
-				await page.clickXpath("(//*[@id='selected'])[1]");
+				await page.Log(ts," Select " + String(await page.getTD(td_id,5)) + " in Assigned Role dropdown \n");
+				await page.selectDrpdwn('form div:nth-child(2) select', String(await page.getTD(td_id,5)));
 				
-				await page.Log(ts,' Select Staff \n');
-				await page.clickXpath("(//*[@id='selected'])[1]/option[5]");  // staff
-				
-				await page.Log(ts,' Click Status dropdown \n');
-				await page.clickXpath("(//*[@id='selected'])[2]");
-				
-				await page.Log(ts,' Select Black Listed \n');
-				await page.clickXpath("(//*[@id='selected'])[2]/option[4]");  // black listed
+				await page.Log(ts," Select " + String(await page.getTD(td_id,6)) + " in Status dropdown \n");
+				await page.selectDrpdwn('form div:nth-child(3) select', String(await page.getTD(td_id,6)));				
 				
 				await page.Log(ts,' Click Search button \n');
 				await page.clickXpath("//*[@id='stateSearch']/input");
 				
-				await page.Log(ts," [Add Successful] data found in page 7 row 11 \n");	
-				await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)").then(function(text)
-				{
-					return expect.toHaveString(text,"Test19")
-				});
+				await page.Log(ts," [Add Successful] \n");
+				const val1 = await page.getCssText('tbody tr:nth-last-child(1) td:nth-child(2)');
+				expect.toHaveString(val1, String(await page.getTD(td_id,3)));
+
 				passed_p(2,td);
-			} catch (error) {
-				console.log(error);
+			} 
+			catch(error)
+			{
+				console.log('\t   ' + error );
 				failed_p(2,td);
 			}				
 			// --------------------------------------------------------------------------
@@ -131,26 +119,20 @@ describe('Amzentrix tests for Users', async function () {
 				await page.Log(ts,' Clear Name field \n');
 				await page.clearId("name");
 				
-				await page.Log(ts," Input 'Test20' Name field \n");
-				await page.writeById("name", "Test20");
+				await page.Log(ts," Input " + String(await page.getTD(td_id,7)) + " Name field \n");
+				await page.writeById("name", page.getTD(td_id,7));
 				
 				await page.Log(ts,' Clear Email Address field \n');
 				await page.clearId("email");
 				
-				await page.Log(ts," Input 'test2@gmail' in Email Address field \n");
-				await page.writeById("email", "test2@gmail.com");
+				await page.Log(ts," Input " + String(await page.getTD(td_id,8)) + " in Email Address field \n");
+				await page.writeById("email", page.getTD(td_id,8));
 				
-				await page.Log(ts,' Click Assigned Role dropdown \n');
-				await page.clickId("role_id");
+				await page.Log(ts," Select " + String(await page.getTD(td_id,9)) + " in Assigned Role dropdown \n");
+				await page.selectDrpdwn('#role_id', String(await page.getTD(td_id,9)));
 				
-				await page.Log(ts,' Select Staff \n');
-				await page.clickXpath("//*[@id='role_id']/option[4]");         // Staff
-				
-				await page.Log(ts,' Click Status dropdown \n');
-				await page.clickId("user_status_id");
-				
-				await page.Log(ts,' Select Black Listed \n');
-				await page.clickXpath("//*[@id='user_status_id']/option[3]");  // Black Listed
+				await page.Log(ts," Select " + String(await page.getTD(td_id,10)) + " in Status dropdown \n");
+				await page.selectDrpdwn('#user_status_id', String(await page.getTD(td_id,10)));
 
 				await page.Log(ts,' Click Update button \n');
 				await page.clickClassName("btn btn-success editbtn");
@@ -158,31 +140,27 @@ describe('Amzentrix tests for Users', async function () {
 				await page.Log(ts,' Click OK \n');
 				await ks.sendKey("enter");
 				
-				await page.Log(ts," Input 'Test20' in Search Name field \n");
-				await page.writeById("query", "Test20");
+				await page.Log(ts," Input " + String(await page.getTD(td_id,7)) + " in Search Name field \n");
+				await page.writeById("query", page.getTD(td_id,7));
 				
-				await page.Log(ts,' Click Assigned Role dropdown \n');
-				await page.clickXpath("(//*[@id='selected'])[1]");
+				await page.Log(ts," Select " + String(await page.getTD(td_id,9)) + " in Assigned Role dropdown \n");
+				await page.selectDrpdwn('form div:nth-child(2) select', String(await page.getTD(td_id,9)));
 				
-				await page.Log(ts,' Select Staff \n');
-				await page.clickXpath("(//*[@id='selected'])[1]/option[5]");  // Staff
-				
-				await page.Log(ts,' Click Status dropdown \n');
-				await page.clickXpath("(//*[@id='selected'])[2]");
-				
-				await page.Log(ts,' Select Black Listed \n');
-				await page.clickXpath("(//*[@id='selected'])[2]/option[4]");  // Black Listed
+				await page.Log(ts," Select " + String(await page.getTD(td_id,10)) + " in Status dropdown \n");
+				await page.selectDrpdwn('form div:nth-child(3) select', String(await page.getTD(td_id,10)));	
 
 				await page.Log(ts,' Click Search button \n');
 				await page.clickXpath("//*[@id='stateSearch']/input");
 				
-				await page.Log(ts, " [Edit Successful] data found in page 7 row 11 \n");
-				await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)").then(function(text){
-					return expect.toHaveString(text,"Test20")
-				});
+				await page.Log(ts, " [Edit Successful] \n");
+				const val1 = await page.getCssText('tbody tr:nth-last-child(1) td:nth-child(2)');
+				expect.toHaveString(val1, String(await page.getTD(td_id,7)));
+
 				passed_p(1,td);
-			} catch (error) {
-				console.log(error);
+			} 
+			catch(error)
+			{
+				console.log('\t   ' + error );
 				failed_p(1,td);
 			}
 			// --------------------------------------------------------------------------
@@ -190,10 +168,9 @@ describe('Amzentrix tests for Users', async function () {
 			// Delete -------------------------------------------------------------------
 			try
 			{
-				await page.Log(ts, " [For Deletion] data found in page 7 row 11 \n");
-				await page.getCssText("tbody tr:nth-last-child(1) td:nth-child(2)").then(function(text){
-					return expect.toHaveString(text,"Test20")
-				});
+				await page.Log(ts, " [For Deletion] \n");
+				const val1 = await page.getCssText('tbody tr:nth-last-child(1) td:nth-child(2)');
+				expect.toHaveString(val1, String(await page.getTD(td_id,7)));
 
 				await page.Log(ts,' Click Delete icon \n');
 				await page.clickCss("table tbody  tr:nth-last-child(1) a:nth-child(2)"); 
@@ -204,19 +181,36 @@ describe('Amzentrix tests for Users', async function () {
 				await page.Log(ts,' Click OK \n');
 				await ks.sendKey("enter");
 				
-				await page.Log(ts, " [Delete Successful]");
+				await page.Log(ts," Input " + String(await page.getTD(td_id,7)) + " in Search Name field \n");
+				await page.writeById("query", page.getTD(td_id,7));
+				
+				await page.Log(ts," Select " + String(await page.getTD(td_id,9)) + " in Assigned Role dropdown \n");
+				await page.selectDrpdwn('form div:nth-child(2) select', String(await page.getTD(td_id,9)));
+				
+				await page.Log(ts," Select " + String(await page.getTD(td_id,10)) + " in Status dropdown \n");
+				await page.selectDrpdwn('form div:nth-child(3) select', String(await page.getTD(td_id,10)));	
+
+				await page.Log(ts,' Click Search button \n');
+				await page.clickXpath("//*[@id='stateSearch']/input");
+				
+				const val2 = await page.getCssText('#main-content div:nth-child(5) td');
+				expect.toHaveString(val2, "No data yet.");
+				await page.Log(ts, " [Delete Successful] No data yet.");
+				
 				passed_p(0,td);
-			} catch (error) {
-				console.log(error);
+			} 
+			catch(error)
+			{
+				console.log('\t   ' + error );
 				failed_p(0,td);
 			}
 			// --------------------------------------------------------------------------
 
-			await fs.appendFile(page.path , 'Users Users SUCCESSFUL \n', function(err) {}) 			
+			await fs.appendFile( page.path, ' Admin Settings Users - Add, Edit and Delete SUCCESSFUL \n', function(err) {}) 			
 		}
 		catch(error)
 		{
-			await fs.appendFile(page.path , 'Users Users FAILED \n', function(err) {
+			await fs.appendFile( page.path, ' Admin Settings Users - Add, Edit and Delete FAILED \n', function(err) {
                 console.log('\t   ' + error );
             })  
 		}	
