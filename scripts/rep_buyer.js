@@ -8,7 +8,7 @@ const Page = require('../lib/webdrivers'),
 var td = '/Buyer Frequency.csv';
 var ts = '/Buyer Frequency.txt';
     
-// SALES REPORT (SINGLE VS MULTIPLE)
+// SALES REPORT (BUYER FREQUENCY)
 describe('Amzentrix tests for Report Sales Report (Buyer Frequency)', async function () {
     beforeEach(async () => {	
     	page = new Page();
